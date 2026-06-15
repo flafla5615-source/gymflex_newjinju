@@ -6,8 +6,9 @@
   <meta name="description" content="짐플릭스 신진주역점 — 월 38,900원, 한 달부터 시작하는 구독형 헬스장. 처음부터 12개월을 결제하지 않아도 됩니다.">
   <meta name="theme-color" content="#080808">
   <title>짐플릭스 신진주역점 | 한 달부터 시작하는 헬스 구독</title>
-  <link rel="icon" href="data:,">
-  <link rel="preload" as="image" href="images/gymflix/01-hero.png" fetchpriority="high">
+
+  <!-- Hero image preload -->
+  <link rel="preload" as="image" href="images/gymflix-01-hero.png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -19,13 +20,13 @@
       theme: {
         extend: {
           colors: {
-            gblack: '#080808', gcard: '#151515',
-            gred: '#E21D2F', gredbr: '#FF3145',
-            gwhite: '#F5F5F5', ggray: '#A6A6A6',
+            gblack:'#080808', gcard:'#151515',
+            gred:'#E21D2F', gredbr:'#FF3145',
+            gwhite:'#F5F5F5', ggray:'#A6A6A6',
           },
           fontFamily: {
-            pre: ['Pretendard', '-apple-system', 'sans-serif'],
-            outfit: ['Outfit', 'sans-serif'],
+            pre:['Pretendard','-apple-system','sans-serif'],
+            outfit:['Outfit','sans-serif'],
           },
         }
       }
@@ -33,399 +34,425 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Pretendard', -apple-system, sans-serif;
-      background: #080808; color: #F5F5F5;
-      word-break: keep-all; overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Pretendard',-apple-system,sans-serif;
+      background:#080808;color:#F5F5F5;
+      word-break:keep-all;overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
     }
-    @media (max-width: 767px) { body { padding-bottom: 78px; } }
-    :root {
-      --black: #080808; --card: #151515;
-      --red: #E21D2F; --redbr: #FF3145;
-      --white: #F5F5F5; --gray: #A6A6A6; --nav-h: 60px;
+    :root{
+      --black:#080808;--card:#151515;
+      --red:#E21D2F;--redbr:#FF3145;
+      --white:#F5F5F5;--gray:#A6A6A6;--nav-h:60px;
     }
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #080808; }
-    ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:#080808;}
+    ::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:2px;}
 
-    /* Image placeholder */
-    .imgph {
-      background: linear-gradient(145deg, #111 0%, #150505 60%, #1c0608 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 10px;
-      position: relative; overflow: hidden;
+    /* ── NAV ── */
+    .nav-glass{
+      background:rgba(8,8,8,0.88);
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,0.05);
     }
-    .imgph::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, transparent 50%, rgba(226,29,47,0.06) 100%);
-    }
-    .imgph-lbl { color: #555; font-size: 11px; letter-spacing: .05em; text-align: center; z-index: 1; padding: 0 12px; line-height: 1.5; }
-    .imgph iconify-icon { color: #E21D2F; opacity: 0.3; z-index: 1; }
+    .nav-link{color:#A6A6A6;font-size:14px;font-weight:500;transition:color .2s;white-space:nowrap;}
+    .nav-link:hover{color:#F5F5F5;}
 
-    /* Real image frames */
-    .hero-img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
+    /* ── Mobile Menu ── */
+    .mob-menu{
+      position:fixed;top:var(--nav-h);left:0;right:0;z-index:90;
+      background:rgba(8,8,8,0.97);backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      transform:translateY(-110%);opacity:0;
+      transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s ease;
+      padding:8px 0 16px;
     }
-    .media-frame {
-      position: relative; display: block; width: 100%;
-      overflow: hidden; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: #0b0b0b; box-shadow: 0 24px 70px rgba(0,0,0,0.24);
+    .mob-menu.open{transform:translateY(0);opacity:1;}
+
+    /* ── Buttons ── */
+    .btn-red{
+      background:var(--red);color:#fff;font-weight:600;
+      font-family:'Pretendard',sans-serif;
+      border-radius:9999px;border:none;cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      transition:background .2s,transform .15s cubic-bezier(.16,1,.3,1);
+      text-decoration:none;white-space:nowrap;
     }
-    button.media-frame {
-      appearance: none; -webkit-appearance: none;
-      padding: 0; color: inherit; text-align: left; font: inherit;
+    .btn-red:hover{background:var(--redbr);transform:scale(1.02);}
+    .btn-red:active{transform:scale(.97);}
+    .btn-outline{
+      background:transparent;color:var(--white);font-weight:500;
+      font-family:'Pretendard',sans-serif;
+      border-radius:9999px;border:1px solid rgba(255,255,255,0.18);
+      cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      transition:border-color .2s,background .2s,transform .15s cubic-bezier(.16,1,.3,1);
+      text-decoration:none;white-space:nowrap;
     }
-    .media-frame.zoomable { cursor: zoom-in; }
-    .media-frame img { display: block; width: 100%; height: 100%; }
-    .media-cover img { object-fit: cover; }
-    .media-contain img {
-      object-fit: contain; padding: clamp(8px, 1.7vw, 18px);
-      background: #0a0a0a;
-    }
-    .media-16x9 { aspect-ratio: 16 / 9; }
-    .media-tall { min-height: 260px; }
-    .section-visual { margin: 0 auto 32px; max-width: 900px; }
-    .visual-grid {
-      display: grid; grid-template-columns: 1fr; gap: 18px;
-      align-items: center;
-    }
-    @media (min-width: 768px) {
-      .visual-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 28px; }
-      .visual-grid.visual-rev { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
-    }
-    .mobile-only { display: block; }
-    .desktop-only { display: none; }
-    @media (min-width: 768px) {
-      .mobile-only { display: none; }
-      .desktop-only { display: block; }
-    }
-    .trainer-avatar {
-      aspect-ratio: 3 / 4; max-height: 300px;
-      background: radial-gradient(circle at 50% 20%, rgba(226,29,47,.25), transparent 34%),
-                  linear-gradient(145deg, #181818 0%, #090909 100%);
-      display: flex; align-items: center; justify-content: center;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .trainer-avatar-badge {
-      width: 92px; height: 92px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 900;
-      background: linear-gradient(145deg, rgba(226,29,47,.95), rgba(90,10,18,.95));
-      box-shadow: 0 18px 44px rgba(226,29,47,.18);
-    }
-    .image-modal-box {
-      max-width: min(1120px, calc(100vw - 32px));
-      width: auto; padding: 14px; background: #101010;
-    }
-    .image-modal-box img {
-      display: block; max-width: 100%; max-height: 82vh;
-      width: auto; height: auto; border-radius: 12px;
-      object-fit: contain; background: #080808;
+    .btn-outline:hover{border-color:var(--red);background:rgba(226,29,47,0.08);transform:scale(1.02);}
+
+    /* ── Section tag ── */
+    .stag{
+      display:inline-block;background:rgba(226,29,47,0.1);
+      color:var(--red);font-size:11px;font-weight:700;
+      letter-spacing:.08em;padding:4px 12px;border-radius:100px;
+      border:1px solid rgba(226,29,47,0.18);margin-bottom:14px;
     }
 
-    /* Nav */
-    .nav-glass {
-      background: rgba(8,8,8,0.88);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    /* ── Animations ── */
+    .fade-up{
+      opacity:0;transform:translateY(28px);
+      transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);
     }
-    .nav-link { color: #A6A6A6; font-size: 14px; font-weight: 500; transition: color .2s; white-space: nowrap; }
-    .nav-link:hover { color: #F5F5F5; }
+    .fade-up.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+    .d4{transition-delay:.32s}.d5{transition-delay:.40s}
 
-    /* Mobile menu */
-    .mob-menu {
-      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 90;
-      background: rgba(8,8,8,0.97); backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transform: translateY(-110%); opacity: 0;
-      transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease;
-      padding: 8px 0 16px;
-    }
-    .mob-menu.open { transform: translateY(0); opacity: 1; }
+    /* ── Cards ── */
+    .gcard{background:var(--card);border-radius:14px;border:1px solid rgba(255,255,255,0.06);}
 
-    /* Buttons */
-    .btn-red {
-      background: var(--red); color: #fff; font-weight: 600;
-      font-family: 'Pretendard', sans-serif;
-      border-radius: 9999px; border: none; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      transition: background .2s, transform .15s cubic-bezier(.16,1,.3,1);
-      text-decoration: none; white-space: nowrap;
-    }
-    .btn-red:hover { background: var(--redbr); transform: scale(1.02); }
-    .btn-red:active { transform: scale(.97); }
-    .btn-outline {
-      background: transparent; color: var(--white); font-weight: 500;
-      font-family: 'Pretendard', sans-serif;
-      border-radius: 9999px; border: 1px solid rgba(255,255,255,0.18);
-      cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      transition: border-color .2s, background .2s, transform .15s cubic-bezier(.16,1,.3,1);
-      text-decoration: none; white-space: nowrap;
-    }
-    .btn-outline:hover { border-color: var(--red); background: rgba(226,29,47,0.08); transform: scale(1.02); }
-    .btn-outline:active { transform: scale(.97); }
-    #hero .btn-red, #subscription .btn-red, #how-to-use .btn-red,
-    #form .btn-red, #final-cta .btn-red, .fixed-cta .btn-red { min-height: 52px; }
+    /* ── Divider ── */
+    .hdiv{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.06),transparent);}
 
-    /* Section tag */
-    .stag {
-      display: inline-block; background: rgba(226,29,47,0.1);
-      color: var(--red); font-size: 11px; font-weight: 700;
-      letter-spacing: .08em; text-transform: uppercase;
-      padding: 4px 12px; border-radius: 100px;
-      border: 1px solid rgba(226,29,47,0.18); margin-bottom: 14px;
+    /* ── Layout ── */
+    section{padding:72px 0;}
+    @media(max-width:640px){section{padding:56px 0;}}
+    .container{max-width:1080px;margin:0 auto;padding:0 20px;}
+    @media(min-width:768px){.container{padding:0 32px;}}
+
+    /* ── Red glow ── */
+    .red-glow::before{
+      content:'';position:absolute;top:0;left:50%;width:600px;height:300px;
+      background:radial-gradient(ellipse at center,rgba(226,29,47,0.16) 0%,transparent 70%);
+      transform:translateX(-50%);pointer-events:none;
     }
 
-    /* Animations */
-    .fade-up {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    /* ══════════════════════════════════════
+       HERO IMAGE
+       ══════════════════════════════════════ */
+    .hero-bg{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center 40%;
     }
-    .fade-up.vis { opacity: 1; transform: translateY(0); }
-    .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
-    .d4{transition-delay:.32s} .d5{transition-delay:.40s} .d6{transition-delay:.48s}
-
-    /* Cards */
-    .gcard { background: var(--card); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); }
-    .gcard-hover:hover { border-color: rgba(255,255,255,0.1); }
-
-    /* Pain point card */
-    .pain-card {
-      background: var(--card); border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 16px; display: flex; align-items: flex-start; gap: 12px;
-      transition: border-color .2s;
-    }
-    .pain-card:hover { border-color: rgba(255,255,255,0.14); }
-
-    /* Facility rows */
-    .fac-row { display: flex; flex-direction: column; }
-    @media (min-width: 768px) {
-      .fac-row { flex-direction: row; align-items: stretch; }
-      .fac-row.rev { flex-direction: row-reverse; }
-    }
-    .fac-img { flex: 1; min-height: 240px; }
-    @media (min-width: 768px) { .fac-img { min-height: 300px; } }
-    .fac-txt { flex: 1; padding: 28px 24px; display: flex; flex-direction: column; justify-content: center; }
-    .facility-showcase { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-    @media (min-width: 768px) { .facility-showcase { padding: 0 32px; } }
-    .facility-stack { display: grid; gap: 28px; }
-    @media (min-width: 768px) { .facility-stack { gap: 42px; } }
-    .facility-block {
-      display: grid; grid-template-columns: 1fr; gap: 18px;
-      background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px; overflow: hidden;
-    }
-    @media (min-width: 768px) {
-      .facility-block { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 0; }
-      .facility-block.image-first { grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr); }
-    }
-    .facility-copy {
-      padding: 26px 22px; display: flex; flex-direction: column; justify-content: center;
-    }
-    @media (min-width: 768px) { .facility-copy { padding: 36px 34px; } }
-    .facility-kicker {
-      display: flex; align-items: center; gap: 10px;
-      color: #E21D2F; font-family: 'Outfit', sans-serif;
-      font-weight: 800; font-size: 12px; letter-spacing: .16em; margin-bottom: 16px;
-    }
-    .facility-kicker::before {
-      content: ''; width: 34px; height: 2px; border-radius: 999px; background: #E21D2F;
-    }
-    .facility-title { font-size: clamp(22px, 4.8vw, 34px); line-height: 1.18; font-weight: 900; margin-bottom: 14px; }
-    .facility-desc { color: #A6A6A6; font-size: 15px; line-height: 1.75; }
-    .facility-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-    .facility-tag {
-      color: #E21D2F; background: rgba(226,29,47,.09);
-      border: 1px solid rgba(226,29,47,.18); border-radius: 999px;
-      padding: 7px 11px; font-size: 12px; font-weight: 700;
-    }
-    .facility-stat {
-      display: inline-flex; align-items: baseline; gap: 6px;
-      margin-bottom: 18px; color: #E21D2F; font-family: 'Outfit', sans-serif;
-      font-size: clamp(38px, 8vw, 58px); font-weight: 900; line-height: 1;
-    }
-    .facility-stat span { color: #F5F5F5; font-family: 'Pretendard', sans-serif; font-size: 18px; font-weight: 800; }
-    .facility-media { min-height: 260px; border-radius: 0; border: none; box-shadow: none; }
-    .facility-media img { object-fit: cover; }
-    @media (max-width: 767px) {
-      .facility-block .facility-media { order: 1; min-height: 236px; }
-      .facility-block .facility-copy { order: 2; }
-    }
-    @media (min-width: 768px) {
-      .facility-media { min-height: 390px; }
-      .facility-block.compact { grid-template-columns: minmax(0,.78fr) minmax(0,1.22fr); }
-      .facility-block.compact .facility-media { min-height: 330px; }
-    }
-    .facility-mini-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
-    @media (min-width: 520px) { .facility-mini-grid { grid-template-columns: repeat(3, 1fr); } }
-    .facility-mini-card {
-      background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07);
-      border-radius: 12px; padding: 16px;
-    }
-    .facility-mini-card p:first-child { color: #F5F5F5; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
-    .facility-mini-card p:last-child { color: #A6A6A6; font-size: 12px; line-height: 1.5; }
-    .facility-overview { overflow: hidden; border-radius: 16px; background: #0e0e0e; border: 1px solid rgba(255,255,255,.06); }
-    .facility-overview .facility-media { aspect-ratio: 16 / 8; min-height: 280px; }
-    .facility-overview-copy { padding: 24px 22px 26px; }
-    @media (min-width: 768px) {
-      .facility-overview-copy { padding: 30px 34px 34px; }
-      .facility-overview .facility-media { min-height: 440px; }
+    @media(max-width:640px){
+      .hero-bg{object-position:65% 40%;}
     }
 
-    /* Sliders */
-    .t-slider, .eq-slider {
-      display: flex; gap: 16px; overflow-x: auto;
-      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; padding-bottom: 4px;
+    /* ══════════════════════════════════════
+       REAL IMAGES — common
+       ══════════════════════════════════════ */
+    /* Infographic: show full content, no crop */
+    .img-info{
+      width:100%;height:auto;display:block;
+      cursor:zoom-in;
     }
-    .t-slider::-webkit-scrollbar, .eq-slider::-webkit-scrollbar { display: none; }
-    .t-card {
-      flex: 0 0 300px; scroll-snap-align: start;
-      background: var(--card); border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
-      transition: border-color .2s;
+    /* Photo: cover crop */
+    .img-photo{
+      width:100%;height:100%;
+      object-fit:cover;display:block;
     }
-    .t-card:hover { border-color: rgba(226,29,47,0.3); }
-    @media (max-width: 640px) { .t-card { flex: 0 0 82vw; } }
-    .eq-card {
-      flex: 0 0 272px; scroll-snap-align: start;
-      background: var(--card); border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
-      transition: border-color .2s;
+
+    /* ── Pain section ── */
+    .pain-split{display:flex;flex-direction:column;gap:0;}
+    @media(min-width:768px){.pain-split{flex-direction:row;align-items:stretch;}}
+    .pain-photo-col{
+      display:none;
+      flex:0 0 42%;overflow:hidden;
     }
-    .eq-card:hover { border-color: rgba(226,29,47,0.25); }
-    @media (max-width: 640px) { .eq-card { flex: 0 0 80vw; } }
+    @media(min-width:768px){.pain-photo-col{display:block;}}
+    .pain-photo-col img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:center 20%;
+    }
+    /* mobile top photo */
+    .pain-photo-mobile{display:block;width:100%;height:220px;overflow:hidden;}
+    @media(min-width:768px){.pain-photo-mobile{display:none;}}
+    .pain-photo-mobile img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:center 20%;
+    }
+    .pain-content-col{flex:1;padding:48px 28px;}
+    @media(max-width:767px){.pain-content-col{padding:32px 20px;}}
+
+    /* Pain cards */
+    .pain-card{
+      background:rgba(255,255,255,0.03);border-radius:10px;
+      border:1px solid rgba(255,255,255,0.07);
+      padding:14px 16px;display:flex;align-items:center;gap:12px;
+      transition:border-color .2s;
+    }
+    .pain-card:hover{border-color:rgba(255,255,255,0.12);}
+
+    /* Image 07 banner */
+    .img07-wrap{
+      width:100%;overflow:hidden;
+      background:#0d0d0d;
+    }
+    .img07-wrap img{
+      width:100%;height:auto;display:block;
+    }
+    @media(max-width:640px){
+      .img07-wrap img{
+        /* On mobile: contain so text is fully readable */
+        width:100%;height:auto;
+      }
+    }
+
+    /* ── Subscription section ── */
+    .sub-split{display:flex;flex-direction:column-reverse;gap:24px;}
+    @media(min-width:768px){.sub-split{flex-direction:row;align-items:center;gap:48px;}}
+    .sub-text{flex:1;}
+    .sub-photo{
+      flex:0 0 44%;border-radius:14px;overflow:hidden;
+    }
+    .sub-photo img{
+      width:100%;
+      height:clamp(220px,32vw,380px);
+      object-fit:cover;object-position:center;
+      display:block;
+    }
+
+    /* ── Comparison section ── */
+    .comp-visual{
+      width:100%;overflow:hidden;
+      height:clamp(180px,28vw,340px);
+      position:relative;
+    }
+    .comp-visual img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:center;
+    }
+
+    /* picture-based responsive comparison */
+    .comp-img-wrap{
+      text-align:center;
+    }
+    .comp-img-wrap img{
+      width:100%;height:auto;
+      max-width:860px;
+      display:inline-block;
+      cursor:zoom-in;
+    }
+
+    /* ── Benefits section ── */
+    .ben-split{display:flex;flex-direction:column;gap:24px;}
+    @media(min-width:768px){.ben-split{flex-direction:row;align-items:center;gap:48px;}}
+    .ben-text{flex:1;}
+    .ben-photo{
+      flex:0 0 40%;border-radius:14px;overflow:hidden;
+    }
+    .ben-photo img{
+      width:100%;
+      height:clamp(220px,30vw,360px);
+      object-fit:cover;object-position:center 20%;
+      display:block;
+    }
+
+    /* ── Facility section ── */
+    .fac-hero{
+      position:relative;overflow:hidden;
+      height:clamp(300px,45vw,560px);
+    }
+    .fac-hero img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:center 40%;
+    }
+    .fac-hero-overlay{
+      position:absolute;bottom:0;left:0;right:0;
+      background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.7) 50%,transparent 100%);
+      padding:40px 0 32px;
+    }
+
+    /* Facility feature cards */
+    .fac-feat-card{
+      background:var(--card);border-radius:12px;
+      border:1px solid rgba(255,255,255,0.06);
+      padding:20px 18px;
+    }
+
+    /* ── How-to-use ── */
+    /* Uses image 10 full-width, no card rendering */
+
+    /* ── Equipment section ── */
+    .eq-banner{
+      position:relative;overflow:hidden;
+      height:clamp(220px,36vw,460px);
+    }
+    .eq-banner img{
+      width:100%;height:100%;
+      object-fit:cover;object-position:right 40%;
+    }
+    .eq-banner-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to right,rgba(8,8,8,0.92) 0%,rgba(8,8,8,0.55) 55%,rgba(8,8,8,0.1) 100%);
+    }
+    .eq-banner-text{
+      position:absolute;bottom:0;left:0;right:0;padding:32px 0;
+    }
+
+    /* Equipment slider */
+    .eq-slider{
+      display:flex;gap:16px;overflow-x:auto;
+      scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+      scrollbar-width:none;padding-bottom:4px;
+    }
+    .eq-slider::-webkit-scrollbar{display:none;}
+    .eq-card{
+      flex:0 0 272px;scroll-snap-align:start;
+      background:var(--card);border-radius:14px;
+      border:1px solid rgba(255,255,255,0.06);overflow:hidden;
+      transition:border-color .2s;
+    }
+    .eq-card:hover{border-color:rgba(226,29,47,0.25);}
+    @media(max-width:640px){.eq-card{flex:0 0 80vw;}}
 
     /* Play button */
-    .play-wrap { position: relative; cursor: pointer; }
-    .play-btn {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 52px; height: 52px; border-radius: 50%;
-      background: rgba(226,29,47,0.85);
-      display: flex; align-items: center; justify-content: center;
-      transition: background .2s, transform .2s cubic-bezier(.16,1,.3,1);
+    .play-wrap{position:relative;cursor:pointer;}
+    .play-btn{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:52px;height:52px;border-radius:50%;
+      background:rgba(226,29,47,0.85);
+      display:flex;align-items:center;justify-content:center;
+      transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1);
     }
-    .play-wrap:hover .play-btn { background: var(--redbr); transform: translate(-50%,-50%) scale(1.1); }
+    .play-wrap:hover .play-btn{background:var(--redbr);transform:translate(-50%,-50%) scale(1.1);}
 
-    /* FAQ */
-    .faq-ans { max-height: 0; overflow: hidden; transition: max-height .35s cubic-bezier(.16,1,.3,1); }
-    .faq-ans.open { max-height: 300px; }
-    .faq-icon { transition: transform .3s ease; }
-    .faq-icon.open { transform: rotate(45deg); }
+    /* Placeholder for video thumbnails */
+    .imgph{
+      background:linear-gradient(145deg,#111 0%,#150505 60%,#1c0608 100%);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:10px;
+      position:relative;overflow:hidden;
+    }
+    .imgph-lbl{color:#555;font-size:11px;text-align:center;z-index:1;padding:0 12px;line-height:1.5;}
+    .imgph iconify-icon{color:#E21D2F;opacity:.3;z-index:1;}
 
-    /* Form */
-    .finput {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px; color: var(--white); width: 100%;
-      padding: 14px 16px; font-family: 'Pretendard', sans-serif; font-size: 15px;
-      outline: none; transition: border-color .2s, background .2s; appearance: none;
+    /* ── Trainer cards (Image 13 style) ── */
+    .trainer-grid{
+      display:flex;gap:20px;overflow-x:auto;
+      scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+      scrollbar-width:none;padding-bottom:4px;
     }
-    .finput:focus { border-color: var(--red); background: rgba(226,29,47,0.04); }
-    .finput::placeholder { color: #444; }
-    .finput option { background: #151515; }
-    .ferr { color: #FF3145; font-size: 12px; margin-top: 5px; display: none; }
-    .ferr.show { display: block; }
-
-    /* Checkbox */
-    .cbox {
-      appearance: none; -webkit-appearance: none;
-      width: 20px; height: 20px; flex-shrink: 0;
-      border: 1.5px solid rgba(255,255,255,0.2); border-radius: 5px;
-      background: transparent; cursor: pointer; position: relative;
-      transition: background .18s, border-color .18s;
+    .trainer-grid::-webkit-scrollbar{display:none;}
+    @media(min-width:1024px){
+      .trainer-grid{
+        display:grid;grid-template-columns:repeat(3,1fr);
+        overflow-x:visible;
+      }
     }
-    .cbox:checked { background: var(--red); border-color: var(--red); }
-    .cbox:checked::after {
-      content: ''; position: absolute; top: 2px; left: 6px;
-      width: 5px; height: 9px;
-      border: 2px solid #fff; border-top: none; border-left: none;
-      transform: rotate(45deg);
+    .t-card{
+      flex:0 0 280px;scroll-snap-align:start;
+      background:#0e0e0e;border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);overflow:hidden;
+      transition:border-color .2s;
+      display:flex;flex-direction:column;
+      cursor:pointer;
     }
-
-    /* Modals */
-    .overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 200;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity .28s ease;
+    .t-card:hover{border-color:rgba(226,29,47,0.4);}
+    @media(max-width:640px){.t-card{flex:0 0 82vw;}}
+    @media(min-width:1024px){.t-card{flex:none;}}
+    .t-card-header{
+      background:#E21D2F;padding:8px 16px;
+      display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
     }
-    .overlay.act { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: #151515; border-radius: 18px; padding: 28px 24px;
-      max-width: 520px; width: calc(100% - 32px);
-      border: 1px solid rgba(255,255,255,0.08);
-      transform: scale(.94); transition: transform .3s cubic-bezier(.16,1,.3,1);
-      max-height: 90vh; overflow-y: auto;
-    }
-    .overlay.act .modal-box { transform: scale(1); }
-
-    /* Fixed bottom CTA */
-    .fixed-cta {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      padding: 10px 16px 14px;
-      background: linear-gradient(to top, rgba(8,8,8,0.98) 0%, rgba(8,8,8,0.88) 100%);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      transform: translateY(0); transition: transform .3s ease;
-    }
-    .fixed-cta.hide { transform: translateY(110%); }
-    @media (min-width: 768px) { .fixed-cta { display: none !important; } }
-    .fixed-cta-row {
-      display: grid; grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center; gap: 10px; max-width: 100%;
-    }
-    .fixed-cta-price { min-width: 0; }
-    .fixed-cta-action {
-      min-height: 52px; padding-left: 14px; padding-right: 14px;
-      font-size: 13px; line-height: 1.2; max-width: 188px;
-    }
-    @media (max-width: 400px) {
-      .fixed-cta { padding-left: 12px; padding-right: 12px; }
-      .fixed-cta-row { gap: 8px; }
-      .fixed-cta-action { padding-left: 12px; padding-right: 12px; font-size: 12px; }
+    .t-card-photo{aspect-ratio:4/5;overflow:hidden;flex-shrink:0;max-height:280px;background:#111;}
+    .t-card-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+    .t-card-body{padding:18px 18px 14px;flex:1;}
+    .t-card-footer{
+      background:#070707;padding:10px 18px;
+      border-top:1px solid rgba(255,255,255,0.05);
     }
 
-    /* Comparison */
-    .comp-bad  { border: 1px solid rgba(255,255,255,0.07); }
-    .comp-good { border: 1px solid rgba(226,29,47,0.28); }
+    /* ── FAQ ── */
+    .faq-ans{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1);}
+    .faq-ans.open{max-height:300px;}
+    .faq-icon{transition:transform .3s ease;}
+    .faq-icon.open{transform:rotate(45deg);}
 
-    /* Divider */
-    .hdiv { height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent); }
-
-    /* Layout */
-    section { padding: 72px 0; }
-    @media (max-width: 640px) { section { padding: 56px 0; } }
-    .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-    @media (min-width: 768px) { .container { padding: 0 32px; } }
-
-    /* Red glow */
-    .red-glow::before {
-      content: ''; position: absolute; top: 0; left: 50%; width: 600px; height: 300px;
-      background: radial-gradient(ellipse at center, rgba(226,29,47,0.16) 0%, transparent 70%);
-      transform: translateX(-50%); pointer-events: none;
+    /* ── Form ── */
+    .finput{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;color:var(--white);width:100%;
+      padding:14px 16px;font-family:'Pretendard',sans-serif;font-size:15px;
+      outline:none;transition:border-color .2s,background .2s;appearance:none;
+    }
+    .finput:focus{border-color:var(--red);background:rgba(226,29,47,0.04);}
+    .finput::placeholder{color:#444;}
+    .finput option{background:#151515;}
+    .ferr{color:#FF3145;font-size:12px;margin-top:5px;display:none;}
+    .ferr.show{display:block;}
+    .cbox{
+      appearance:none;-webkit-appearance:none;
+      width:20px;height:20px;flex-shrink:0;
+      border:1.5px solid rgba(255,255,255,0.2);border-radius:5px;
+      background:transparent;cursor:pointer;position:relative;
+      transition:background .18s,border-color .18s;
+    }
+    .cbox:checked{background:var(--red);border-color:var(--red);}
+    .cbox:checked::after{
+      content:'';position:absolute;top:2px;left:6px;
+      width:5px;height:9px;
+      border:2px solid #fff;border-top:none;border-left:none;
+      transform:rotate(45deg);
     }
 
-    /* Benefit card */
-    .benefit-card {
-      background: var(--card); border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 24px 20px; text-align: center;
-      transition: border-color .2s, transform .2s cubic-bezier(.16,1,.3,1);
+    /* ── Modals ── */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;transition:opacity .28s ease;
     }
-    .benefit-card:hover { border-color: rgba(226,29,47,0.2); transform: translateY(-2px); }
+    .overlay.act{opacity:1;pointer-events:all;}
+    .modal-box{
+      background:#151515;border-radius:18px;padding:28px 24px;
+      max-width:520px;width:calc(100% - 32px);
+      border:1px solid rgba(255,255,255,0.08);
+      transform:scale(.94);transition:transform .3s cubic-bezier(.16,1,.3,1);
+      max-height:90vh;overflow-y:auto;
+    }
+    .overlay.act .modal-box{transform:scale(1);}
+
+    /* Lightbox */
+    #lightbox{cursor:zoom-out;padding:16px;}
+    #lightbox-inner{
+      background:transparent;border:none;padding:0;max-width:100%;
+      width:auto;max-height:92vh;overflow:auto;border-radius:0;
+    }
+    #lightbox-img{display:block;max-width:90vw;height:auto;border-radius:8px;}
+    .lb-close{
+      position:fixed;top:16px;right:16px;width:42px;height:42px;
+      border-radius:50%;background:rgba(255,255,255,0.15);
+      border:none;color:#fff;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:background .2s;
+    }
+    .lb-close:hover{background:rgba(255,255,255,0.3);}
+
+    /* ── Fixed bottom CTA ── */
+    .fixed-cta{
+      position:fixed;bottom:0;left:0;right:0;z-index:100;
+      padding:10px 16px 14px;
+      background:linear-gradient(to top,rgba(8,8,8,0.98) 0%,rgba(8,8,8,0.88) 100%);
+      border-top:1px solid rgba(255,255,255,0.05);
+      transform:translateY(0);transition:transform .3s ease;
+    }
+    .fixed-cta.hide{transform:translateY(110%);}
+    @media(min-width:768px){.fixed-cta{display:none !important;}}
+
+    /* mobile bottom padding for fixed CTA */
+    @media(max-width:767px){
+      body{padding-bottom:70px;}
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav-glass fixed top-0 w-full z-50" style="height:var(--nav-h)" aria-label="메인 내비게이션">
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav-glass fixed top-0 w-full z-50" style="height:var(--nav-h)">
   <div class="container h-full flex items-center justify-between">
-    <a href="#" class="font-outfit font-black text-xl tracking-[0.2em] text-gwhite" aria-label="짐플릭스 신진주역점 홈">GYMFLIX</a>
+    <a href="#" class="font-outfit font-black text-xl tracking-[0.2em] text-gwhite">GYMFLIX</a>
     <ul class="hidden md:flex items-center gap-7">
       <li><a href="#subscription" class="nav-link">구독 안내</a></li>
       <li><a href="#facility"     class="nav-link">시설 안내</a></li>
@@ -434,15 +461,13 @@
       <li><a href="#location"     class="nav-link">오시는 길</a></li>
     </ul>
     <a href="#form" class="btn-red hidden md:inline-flex px-5 py-2.5 text-sm">한 달 구독 시작하기</a>
-    <button id="hamburger" onclick="toggleMenu()" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg"
-            aria-label="메뉴 열기" aria-expanded="false" aria-controls="mob-menu">
+    <button id="hamburger" onclick="toggleMenu()" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg" aria-label="메뉴" aria-expanded="false">
       <iconify-icon icon="solar:hamburger-menu-linear" width="22"></iconify-icon>
     </button>
   </div>
 </nav>
 
-<!-- Mobile Menu -->
-<div id="mob-menu" class="mob-menu md:hidden" role="navigation">
+<div id="mob-menu" class="mob-menu md:hidden">
   <ul>
     <li><a href="#subscription" onclick="closeMenu()" class="block px-6 py-4 nav-link border-b border-white/5">구독 안내</a></li>
     <li><a href="#facility"     onclick="closeMenu()" class="block px-6 py-4 nav-link border-b border-white/5">시설 안내</a></li>
@@ -456,39 +481,37 @@
 </div>
 
 
-<!-- ① HERO — 고객의 문제 제기 -->
-<section id="hero" class="relative flex flex-col justify-end" style="min-height:100dvh; padding:0;">
-  <img src="images/gymflix/01-hero.png" alt="짐플릭스 신진주역점 히어로 배경 이미지" class="hero-img" fetchpriority="high" decoding="async">
-  <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.85) 40%, rgba(8,8,8,0.45) 75%, rgba(8,8,8,0.25) 100%);" aria-hidden="true"></div>
+<!-- ═══════════════ ① HERO ═══════════════ -->
+<section id="hero" class="relative flex flex-col justify-end" style="min-height:100dvh;padding:0;">
+  <!-- IMAGE 01: 센터 전경 (cover) -->
+  <img src="images/gymflix-01-hero.png"
+       alt="짐플릭스 신진주역점 300평 헬스장 내부 전경"
+       class="hero-bg"
+       fetchpriority="high">
+  <div class="absolute inset-0"
+       style="background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.8) 38%,rgba(8,8,8,0.4) 70%,rgba(8,8,8,0.2) 100%);"
+       aria-hidden="true"></div>
 
-  <div class="relative z-10 container pb-14 pt-28">
+  <div class="relative z-10 container pb-16 pt-28">
     <div class="max-w-2xl">
       <p class="font-outfit font-semibold text-xs tracking-[0.3em] mb-6 fade-up" style="color:#E21D2F;">GYMFLIX SINJINJU</p>
-
       <h1 class="font-black leading-tight mb-7 fade-up d1"
-          style="font-size: clamp(36px, 9vw, 64px); word-break: keep-all;">
-        헬스장,<br>
-        처음부터 12개월을<br>
-        결제해야 할까요?
+          style="font-size:clamp(34px,8.5vw,62px);word-break:keep-all;">
+        헬스장,<br>처음부터 12개월을<br>결제해야 할까요?
       </h1>
-
-      <p class="text-ggray leading-relaxed mb-9 fade-up d2" style="font-size:clamp(15px,3.5vw,18px);">
+      <p class="leading-relaxed mb-9 fade-up d2"
+         style="font-size:clamp(15px,3.5vw,18px);color:#C0C0C0;">
         운동을 얼마나 오래 할지 몰라도 괜찮습니다.<br>
         짐플릭스는 <span class="text-gwhite font-semibold">월 38,900원</span>, 한 달부터 시작할 수 있습니다.
       </p>
-
       <a href="#form" class="btn-red text-base px-8 py-4 mb-12 inline-flex fade-up d3">
         한 달 구독 시작하기
         <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
       </a>
-
-      <div class="flex flex-wrap gap-x-5 gap-y-2 fade-up d4" style="font-size:13px; color:#666;">
-        <span>월 38,900원</span>
-        <span style="color:#333;">·</span>
-        <span>한 달부터 시작</span>
-        <span style="color:#333;">·</span>
-        <span>300평 규모</span>
-        <span style="color:#333;">·</span>
+      <div class="flex flex-wrap gap-x-5 gap-y-2 fade-up d4" style="font-size:13px;color:#555;">
+        <span>월 38,900원</span><span style="color:#2a2a2a;">·</span>
+        <span>한 달부터 시작</span><span style="color:#2a2a2a;">·</span>
+        <span>300평 규모</span><span style="color:#2a2a2a;">·</span>
         <span>주차 3시간 지원</span>
       </div>
     </div>
@@ -496,102 +519,115 @@
 </section>
 
 
-<!-- ② 고객 고민 공감 -->
-<section id="pain-points" style="background:#0d0d0d;">
-  <div class="container">
-    <div class="max-w-xl mb-10 fade-up">
+<!-- ═══════════════ ② 고객 고민 공감 ═══════════════ -->
+<section id="pain-points" style="background:#0d0d0d;padding:0;">
+  <div class="pain-split">
+
+    <!-- IMAGE 02: 고민하는 인물 — PC 왼쪽, 모바일 상단 -->
+    <div class="pain-photo-mobile">
+      <img src="images/gymflix-02-customer-concern.png"
+           alt="헬스장 등록을 고민하는 회원"
+           loading="lazy">
+    </div>
+    <div class="pain-photo-col fade-up">
+      <img src="images/gymflix-02-customer-concern.png"
+           alt="헬스장 등록을 고민하는 회원"
+           loading="lazy">
+    </div>
+
+    <!-- 텍스트 + 고민 카드 -->
+    <div class="pain-content-col fade-up d1">
       <span class="stag">공감</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight">
+      <h2 class="font-black leading-tight mb-8" style="font-size:clamp(22px,4vw,32px);">
         이런 경험 있으셨나요?
       </h2>
-    </div>
-
-    <div class="visual-grid">
-      <button type="button" class="media-frame media-contain media-16x9 zoomable fade-up d1"
-              onclick="openImageModal('images/gymflix/02-customer-concern.png','헬스장 등록 전 고객 고민을 보여주는 이미지')"
-              aria-label="고객 고민 이미지 크게 보기">
-        <img src="images/gymflix/02-customer-concern.png" alt="헬스장 등록 전 고객 고민을 보여주는 이미지" loading="lazy" decoding="async">
-      </button>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="painList" role="list"></div>
-    </div>
-
-    <button type="button" class="media-frame media-contain media-16x9 zoomable mobile-only mt-6 fade-up d3"
-            onclick="openImageModal('images/gymflix/07-concern-banner.png','운동을 미루는 고객 고민 공감 배너')"
-            aria-label="고객 고민 공감 배너 크게 보기">
-      <img src="images/gymflix/07-concern-banner.png" alt="운동을 미루는 고객 고민 공감 배너" loading="lazy" decoding="async">
-    </button>
-
-    <div class="mt-10 fade-up d4 max-w-xl">
-      <p class="text-ggray leading-relaxed" style="font-size:15px;">
+      <ul class="space-y-3" role="list">
+        <li class="pain-card">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+               style="background:rgba(255,255,255,0.05);">
+            <iconify-icon icon="solar:calendar-bold-duotone" width="18" style="color:#A6A6A6"></iconify-icon>
+          </div>
+          <p class="text-sm leading-relaxed">장기회원권을 등록하고 몇 번 가지 못했다</p>
+        </li>
+        <li class="pain-card">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+               style="background:rgba(255,255,255,0.05);">
+            <iconify-icon icon="solar:question-circle-bold-duotone" width="18" style="color:#A6A6A6"></iconify-icon>
+          </div>
+          <p class="text-sm leading-relaxed">헬스장이 나와 맞을지 걱정된다</p>
+        </li>
+        <li class="pain-card">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+               style="background:rgba(255,255,255,0.05);">
+            <iconify-icon icon="solar:wallet-bold-duotone" width="18" style="color:#A6A6A6"></iconify-icon>
+          </div>
+          <p class="text-sm leading-relaxed">한 번에 큰 금액을 결제하기 부담스럽다</p>
+        </li>
+        <li class="pain-card">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+               style="background:rgba(255,255,255,0.05);">
+            <iconify-icon icon="solar:sun-bold-duotone" width="18" style="color:#A6A6A6"></iconify-icon>
+          </div>
+          <p class="text-sm leading-relaxed">방학이나 휴가 전 잠깐 운동하고 싶다</p>
+        </li>
+      </ul>
+      <p class="mt-8 leading-relaxed fade-up d2" style="font-size:15px;color:#A6A6A6;">
         헬스장을 처음 등록할 때 가장 큰 부담은 가격이 아니라<br>
         <span class="text-gwhite font-semibold">'얼마나 다닐 수 있을지 모른다'</span>는 불확실함입니다.
       </p>
     </div>
+  </div>
 
-    <button type="button" class="media-frame media-contain media-16x9 zoomable desktop-only mt-8 fade-up d5"
-            onclick="openImageModal('images/gymflix/07-concern-banner.png','운동을 미루는 고객 고민 공감 배너')"
-            aria-label="고객 고민 공감 배너 크게 보기">
-      <img src="images/gymflix/07-concern-banner.png" alt="운동을 미루는 고객 고민 공감 배너" loading="lazy" decoding="async">
-    </button>
+  <!-- IMAGE 07: 고민 인포그래픽 배너 (contain) -->
+  <div class="img07-wrap mt-2 fade-up">
+    <img src="images/gymflix-07-concern-banner.png"
+         alt="이런 경험 있으셨나요? — 장기회원권 등록 후 못 감 · 헬스장이 맞을지 걱정 · 큰 금액 부담 · 잠깐만 운동하고 싶음"
+         loading="lazy"
+         onclick="openLightbox(this)">
   </div>
 </section>
 
 <div class="hdiv"></div>
 
 
-<!-- ③ 해결책 — 월 구독 -->
+<!-- ═══════════════ ③ 해결책 — 월 구독 ═══════════════ -->
 <section id="subscription">
   <div class="container">
-    <div class="max-w-xl mb-12 fade-up">
-      <span class="stag">해결책</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight mb-5">
-        그래서 짐플릭스는<br>한 달부터 시작할 수 있습니다
-      </h2>
-      <p class="text-ggray leading-relaxed mb-3">
-        헬스 구독은 필요한 기간만 월 단위로 이용하는 방식입니다.
-      </p>
-      <p class="text-ggray leading-relaxed">
-        처음부터 긴 기간을 결제하지 않아도 됩니다.<br>
-        직접 이용해보고 나에게 맞는지 판단하세요.
-      </p>
-    </div>
 
-    <div class="visual-grid visual-rev mb-10">
-      <button type="button" class="media-frame media-contain media-16x9 zoomable fade-up d1"
-              onclick="openImageModal('images/gymflix/08-subscription-info.png','짐플릭스 월 구독 서비스 안내 인포그래픽')"
-              aria-label="월 구독 서비스 안내 이미지 크게 보기">
-        <img src="images/gymflix/08-subscription-info.png" alt="짐플릭스 월 구독 서비스 안내 인포그래픽" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="media-frame media-contain media-16x9 zoomable fade-up d2"
-              onclick="openImageModal('images/gymflix/03-subscription-visual.png','월 38,900원 한 달 구독 안내 보조 이미지')"
-              aria-label="한 달 구독 안내 보조 이미지 크게 보기">
-        <img src="images/gymflix/03-subscription-visual.png" alt="월 38,900원 한 달 구독 안내 보조 이미지" loading="lazy" decoding="async">
-      </button>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-      <div class="gcard p-6 col-span-2 fade-up d1">
-        <p class="font-outfit font-black text-4xl mb-2" style="color:#E21D2F;">38,900<span class="text-2xl text-gwhite font-bold ml-1">원</span></p>
-        <p class="text-ggray text-sm">월 이용료. 긴 기간을 묶어야<br>할인받는 구조가 아닙니다.</p>
+    <!-- 2-col: 텍스트 | IMAGE 03 -->
+    <div class="sub-split mb-10">
+      <!-- IMAGE 03: 스마트폰+QR (모바일에서 먼저 보임, column-reverse) -->
+      <div class="sub-photo fade-up">
+        <img src="images/gymflix-03-subscription.png"
+             alt="스마트폰 QR 스캔으로 짐플릭스 간편 구독 신청"
+             loading="lazy"
+             class="img-photo">
       </div>
-      <div class="gcard p-6 fade-up d2">
-        <iconify-icon icon="solar:calendar-bold-duotone" width="28" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
-        <p class="font-bold mb-1">한 달부터</p>
-        <p class="text-ggray text-sm">최소 이용 기간 제한 없음</p>
-      </div>
-      <div class="gcard p-6 fade-up d3">
-        <iconify-icon icon="solar:wallet-bold-duotone" width="28" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
-        <p class="font-bold mb-1">목돈 부담 없이</p>
-        <p class="text-ggray text-sm">월 단위 결제로 분산</p>
-      </div>
-      <div class="gcard p-6 col-span-2 fade-up d4">
-        <iconify-icon icon="solar:check-circle-bold-duotone" width="28" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
-        <p class="font-bold mb-1">시설을 직접 경험한 뒤 결정</p>
-        <p class="text-ggray text-sm">한 달 써보고 맞으면 계속, 아니면 그만. 장기 약정 없이 자유롭게 선택할 수 있습니다.</p>
+      <div class="sub-text fade-up d1">
+        <span class="stag">해결책</span>
+        <h2 class="font-black leading-tight mb-5" style="font-size:clamp(22px,4vw,32px);">
+          그래서 짐플릭스는<br>한 달부터 시작할 수 있습니다
+        </h2>
+        <p class="leading-relaxed mb-3" style="color:#A6A6A6;">
+          헬스 구독은 필요한 기간만 월 단위로 이용하는 방식입니다.
+        </p>
+        <p class="leading-relaxed" style="color:#A6A6A6;">
+          처음부터 긴 기간을 결제하지 않아도 됩니다.<br>
+          직접 이용해보고 나에게 맞는지 판단하세요.
+        </p>
       </div>
     </div>
 
-    <div class="text-center fade-up d5">
+    <!-- IMAGE 08: 구독 설명 인포그래픽 (contain, 기존 bento grid 대체) -->
+    <div class="fade-up d2">
+      <img src="images/gymflix-08-subscription-info.png"
+           alt="헬스 구독은 필요한 기간만 월 단위로 이용하는 방식입니다 — 월 38,900원 · 한 달부터 시작 · 목돈 부담 없이 · 시설을 직접 경험한 뒤 결정"
+           loading="lazy"
+           class="img-info"
+           onclick="openLightbox(this)">
+    </div>
+
+    <div class="text-center mt-10 fade-up d3">
       <a href="#form" class="btn-red text-base px-8 py-4">한 달 구독 시작하기</a>
     </div>
   </div>
@@ -600,96 +636,41 @@
 <div class="hdiv"></div>
 
 
-<!-- ④ 장기회원권 vs 구독 비교 (유연성 중심) -->
-<section id="comparison" style="background:#0d0d0d;">
-  <div class="container">
-    <div class="text-center max-w-xl mx-auto mb-10 fade-up">
+<!-- ═══════════════ ④ 비교 ═══════════════ -->
+<section id="comparison" style="background:#0d0d0d;padding:0;">
+
+  <!-- IMAGE 04: 감성 비주얼 헤더 — 부담스러운 장기계약 vs 자유로운 구독 -->
+  <div class="comp-visual">
+    <img src="images/gymflix-04-flexibility.png"
+         alt="장기 계약의 부담(왼쪽)과 짐플릭스 월 구독의 자유로움(오른쪽)"
+         loading="lazy"
+         class="img-photo">
+    <div aria-hidden="true"
+         style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,#0d0d0d 100%);"></div>
+  </div>
+
+  <div class="container" style="padding-top:40px;padding-bottom:72px;">
+    <div class="text-center max-w-xl mx-auto mb-8 fade-up">
       <span class="stag">비교</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight">
-        차이는 가격보다<br>
-        <span style="color:#E21D2F;">기간을 선택할 수 있다</span>는 점입니다
+      <h2 class="font-black leading-tight" style="font-size:clamp(20px,4vw,32px);">
+        차이는 가격보다<br><span style="color:#E21D2F;">기간을 선택할 수 있다</span>는 점입니다
       </h2>
     </div>
 
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual desktop-only fade-up d1"
-            onclick="openImageModal('images/gymflix/09-membership-comparison.png','장기회원권과 짐플릭스 구독 비교 이미지')"
-            aria-label="장기회원권과 구독 비교 이미지 크게 보기">
-      <img src="images/gymflix/09-membership-comparison.png" alt="장기회원권과 짐플릭스 구독 비교 이미지" loading="lazy" decoding="async">
-    </button>
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual mobile-only fade-up d1"
-            onclick="openImageModal('images/gymflix/04-comparison-visual.png','모바일용 장기회원권과 구독 비교 이미지')"
-            aria-label="모바일 비교 이미지 크게 보기">
-      <img src="images/gymflix/04-comparison-visual.png" alt="모바일용 장기회원권과 구독 비교 이미지" loading="lazy" decoding="async">
-    </button>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-      <div class="gcard comp-bad rounded-2xl p-7 fade-up d1">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:rgba(255,255,255,0.06);">
-            <iconify-icon icon="solar:card-bold" width="18" style="color:#A6A6A6"></iconify-icon>
-          </div>
-          <div>
-            <p class="text-xs text-ggray">기존 방식</p>
-            <p class="font-bold">장기 회원권</p>
-          </div>
-        </div>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3 text-sm text-ggray">
-            <iconify-icon icon="solar:close-circle-bold" width="16" style="color:#444;flex-shrink:0;margin-top:2px"></iconify-icon>
-            처음부터 긴 기간을 결정해야 함
-          </li>
-          <li class="flex items-start gap-3 text-sm text-ggray">
-            <iconify-icon icon="solar:close-circle-bold" width="16" style="color:#444;flex-shrink:0;margin-top:2px"></iconify-icon>
-            한 번에 큰 금액 선결제
-          </li>
-          <li class="flex items-start gap-3 text-sm text-ggray">
-            <iconify-icon icon="solar:close-circle-bold" width="16" style="color:#444;flex-shrink:0;margin-top:2px"></iconify-icon>
-            중간에 그만두면 손실 부담
-          </li>
-          <li class="flex items-start gap-3 text-sm text-ggray">
-            <iconify-icon icon="solar:close-circle-bold" width="16" style="color:#444;flex-shrink:0;margin-top:2px"></iconify-icon>
-            이용 전 장기간을 먼저 결정
-          </li>
-          <li class="flex items-start gap-3 text-sm text-ggray">
-            <iconify-icon icon="solar:close-circle-bold" width="16" style="color:#444;flex-shrink:0;margin-top:2px"></iconify-icon>
-            생활 일정 변화에 대응하기 어려움
-          </li>
-        </ul>
-      </div>
-
-      <div class="gcard comp-good rounded-2xl p-7 fade-up d2" style="background:rgba(226,29,47,0.03);">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:rgba(226,29,47,0.15);">
-            <iconify-icon icon="solar:refresh-bold" width="18" style="color:#E21D2F"></iconify-icon>
-          </div>
-          <div>
-            <p class="text-xs font-semibold" style="color:#E21D2F;">짐플릭스</p>
-            <p class="font-bold">월 구독</p>
-          </div>
-        </div>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3 text-sm">
-            <iconify-icon icon="solar:check-circle-bold" width="16" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
-            한 달부터 시작
-          </li>
-          <li class="flex items-start gap-3 text-sm">
-            <iconify-icon icon="solar:check-circle-bold" width="16" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
-            월 단위 결제로 부담 분산
-          </li>
-          <li class="flex items-start gap-3 text-sm">
-            <iconify-icon icon="solar:check-circle-bold" width="16" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
-            필요한 기간만 이용
-          </li>
-          <li class="flex items-start gap-3 text-sm">
-            <iconify-icon icon="solar:check-circle-bold" width="16" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
-            직접 이용한 뒤 지속 여부 결정
-          </li>
-          <li class="flex items-start gap-3 text-sm">
-            <iconify-icon icon="solar:check-circle-bold" width="16" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
-            일정에 맞춰 유연하게 이용
-          </li>
-        </ul>
-      </div>
+    <!-- IMAGE 09 (PC) / IMAGE 04 already shown above on mobile -->
+    <!-- Use <picture> for responsive: IMAGE 09 is the infographic comparison table -->
+    <div class="comp-img-wrap fade-up d1">
+      <picture>
+        <!-- PC: IMAGE 09 (infographic comparison table) -->
+        <source media="(min-width:768px)" srcset="images/gymflix-09-comparison.png">
+        <!-- Mobile: IMAGE 09 is still better (has full text), shown contain -->
+        <img src="images/gymflix-09-comparison.png"
+             alt="장기회원권 vs 짐플릭스 구독 비교표 — 처음부터 긴 기간 결정 vs 한 달부터 시작 · 한 번에 큰 금액 vs 월 단위 결제 · 중간 그만두면 손실 vs 필요한 기간만 이용"
+             loading="lazy"
+             style="width:100%;height:auto;max-width:860px;display:inline-block;cursor:zoom-in;"
+             onclick="openLightbox(this)">
+      </picture>
+      <p class="text-center mt-2" style="font-size:11px;color:#555;">이미지를 탭하면 확대할 수 있습니다</p>
     </div>
   </div>
 </section>
@@ -697,134 +678,44 @@
 <div class="hdiv"></div>
 
 
-<!-- ⑤ 구독 혜택 -->
+<!-- ═══════════════ ⑤ 구독 혜택 ═══════════════ -->
 <section id="benefits">
   <div class="container">
-    <div class="text-center max-w-xl mx-auto mb-10 fade-up">
-      <span class="stag">혜택</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight">
-        구독할수록<br>운동을 계속할 이유가 생기도록
-      </h2>
+
+    <!-- 2-col: 텍스트 | IMAGE 05 (실사) -->
+    <div class="ben-split mb-10">
+      <div class="ben-text fade-up">
+        <span class="stag">혜택</span>
+        <h2 class="font-black leading-tight mb-5" style="font-size:clamp(22px,4vw,32px);">
+          구독할수록<br>운동을 계속할 이유가 생기도록
+        </h2>
+        <p class="leading-relaxed" style="color:#A6A6A6;">
+          짐플릭스 구독 회원이라면<br>운동을 더 오래 이어갈 수 있도록 지원합니다.
+        </p>
+      </div>
+      <!-- IMAGE 05: 트레이너+회원 실사 (cover) -->
+      <div class="ben-photo fade-up d1">
+        <img src="images/gymflix-05-benefits.png"
+             alt="트레이너와 구독 회원이 운동 계획을 함께 확인하는 모습"
+             loading="lazy"
+             class="img-photo">
+      </div>
     </div>
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual fade-up d1"
-            onclick="openImageModal('images/gymflix/11-subscription-benefits.png','짐플릭스 구독 혜택 안내 이미지')"
-            aria-label="구독 혜택 이미지 크게 보기">
-      <img src="images/gymflix/11-subscription-benefits.png" alt="짐플릭스 구독 혜택 안내 이미지" loading="lazy" decoding="async">
-    </button>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto" id="benefitList" role="list"></div>
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual mobile-only mt-8 fade-up d4"
-            onclick="openImageModal('images/gymflix/05-benefits-visual.png','트레이너 상담과 혜택을 안내하는 보조 이미지')"
-            aria-label="혜택 보조 이미지 크게 보기">
-      <img src="images/gymflix/05-benefits-visual.png" alt="트레이너 상담과 혜택을 안내하는 보조 이미지" loading="lazy" decoding="async">
-    </button>
-  </div>
-</section>
 
-<div class="hdiv"></div>
-
-
-<!-- ⑥ 시설 소개 -->
-<section id="facility">
-  <div class="container">
-    <div class="max-w-xl mb-12 fade-up">
-      <span class="stag">시설 안내</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight">
-        한 달부터 시작해도<br>시설은 제대로 이용할 수 있습니다
-      </h2>
+    <!-- IMAGE 11: 구독 혜택 인포그래픽 (contain, 기존 카드 대체) -->
+    <div class="fade-up d2">
+      <img src="images/gymflix-11-benefit-cards.png"
+           alt="구독 혜택: 초보자 오리엔테이션 · 친구 추천 시 PT 2회 · 출석 리워드 · 장기 구독 리워드 · 인바디 및 운동상담"
+           loading="lazy"
+           class="img-info"
+           onclick="openLightbox(this)">
     </div>
-  </div>
 
-  <div class="facility-showcase">
-    <div class="facility-stack">
-      <article class="facility-block fade-up d1">
-        <div class="facility-copy">
-          <p class="facility-kicker">01 FREE WEIGHT</p>
-          <p class="facility-stat">300<span>평 규모</span></p>
-          <h3 class="facility-title">300평 규모의 넓은 프리웨이트존</h3>
-          <p class="facility-desc">기구 사이가 답답하지 않아 피크타임에도 보다 여유로운 동선으로 운동할 수 있습니다.</p>
-          <div class="facility-tags" aria-label="프리웨이트존 핵심 정보">
-            <span class="facility-tag">300평 규모</span>
-            <span class="facility-tag">넓은 동선</span>
-            <span class="facility-tag">프리웨이트존</span>
-          </div>
-        </div>
-        <div class="media-frame media-cover facility-media">
-          <img src="images/gymflix/facility_01_freeweight.png" width="1672" height="941" alt="짐플릭스 신진주역점 프리웨이트존" loading="lazy" decoding="async" style="object-position:center;">
-        </div>
-      </article>
-
-      <article class="facility-block image-first fade-up d2">
-        <div class="media-frame media-cover facility-media">
-          <img src="images/gymflix/facility_02_cardio.png" width="1672" height="941" alt="짐플릭스 신진주역점 스텝밀 및 유산소존" loading="lazy" decoding="async" style="object-position:center;">
-        </div>
-        <div class="facility-copy">
-          <p class="facility-kicker">02 CARDIO ZONE</p>
-          <p class="facility-stat">4<span>대 스텝밀</span></p>
-          <h3 class="facility-title">기다림을 줄인 유산소존</h3>
-          <p class="facility-desc">인텐자 스텝밀 4대와 다양한 트레드밀을 갖춰 운동 목적에 맞는 유산소 운동을 편하게 진행할 수 있습니다.</p>
-          <div class="facility-tags" aria-label="유산소존 핵심 정보">
-            <span class="facility-tag">스텝밀 4대</span>
-            <span class="facility-tag">다양한 트레드밀</span>
-            <span class="facility-tag">유산소존</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="facility-block compact fade-up d3">
-        <div class="facility-copy">
-          <p class="facility-kicker">03 MACHINE ZONE</p>
-          <h3 class="facility-title">초보자도 이용하기 쉬운 머신존</h3>
-          <p class="facility-desc">다양한 고급 머신이 구비되어 있어 운동 목적과 수준에 맞는 기구를 선택할 수 있습니다.</p>
-          <div class="facility-tags" aria-label="머신존 핵심 정보">
-            <span class="facility-tag">고급 머신</span>
-            <span class="facility-tag">초보자 이용 가능</span>
-            <span class="facility-tag">목적별 운동</span>
-          </div>
-          <div class="facility-mini-grid">
-            <div class="facility-mini-card">
-              <p>맞춤 선택</p>
-              <p>운동 부위와 목적에 따라 머신을 고를 수 있습니다.</p>
-            </div>
-            <div class="facility-mini-card">
-              <p>쉬운 시작</p>
-              <p>처음 이용하는 회원도 부담 없이 접근할 수 있습니다.</p>
-            </div>
-            <div class="facility-mini-card">
-              <p>영상 연계</p>
-              <p>기구 사용법 영상 카드와 자연스럽게 이어집니다.</p>
-            </div>
-          </div>
-        </div>
-        <div class="media-frame media-cover facility-media">
-          <img src="images/gymflix/facility_03_machinezone.png" width="1672" height="941" alt="짐플릭스 신진주역점 고급 머신존" loading="lazy" decoding="async" style="object-position:center;">
-        </div>
-      </article>
-
-      <article class="facility-overview fade-up d4">
-        <div class="media-frame media-cover facility-media">
-          <img src="images/gymflix/facility_04_overview.png" width="1672" height="941" alt="짐플릭스 신진주역점 전체 시설 전경" loading="lazy" decoding="async" style="object-position:center;">
-        </div>
-        <div class="facility-overview-copy">
-          <p class="facility-kicker">04 OVERVIEW</p>
-          <h3 class="facility-title">쾌적하고 정돈된 운동 환경</h3>
-          <p class="facility-desc">넓은 공용 공간과 정돈된 기구 배치로 운동에 집중하기 좋은 환경을 제공합니다.</p>
-          <p class="facility-desc mt-2">VIP PT 공간과 주차 3시간 지원으로 더욱 편리하게 이용할 수 있습니다.</p>
-          <div class="facility-mini-grid">
-            <div class="facility-mini-card">
-              <p>쾌적한 시설</p>
-              <p>넓고 정돈된 공용 운동 공간</p>
-            </div>
-            <div class="facility-mini-card">
-              <p>VIP PT 공간</p>
-              <p>더 집중도 높은 개인 운동 환경</p>
-            </div>
-            <div class="facility-mini-card">
-              <p>주차 3시간 지원</p>
-              <p>차량 방문도 부담 없이 이용</p>
-            </div>
-          </div>
-        </div>
-      </article>
+    <p class="text-center mt-4 fade-up d3" style="font-size:12px;color:#555;">
+      * 일부 혜택은 매장 운영 기준에 따라 변경될 수 있습니다.
+    </p>
+    <div class="text-center mt-8 fade-up d4">
+      <a href="#form" class="btn-red text-base px-8 py-4">짐플릭스 구독 신청하기</a>
     </div>
   </div>
 </section>
@@ -832,52 +723,90 @@
 <div class="hdiv"></div>
 
 
-<!-- ⑦ 이용방법 -->
+<!-- ═══════════════ ⑥ 시설 소개 ═══════════════ -->
+<section id="facility" style="padding:0 0 72px;">
+
+  <!-- IMAGE 06: 시설 전경 히어로 배너 (cover) -->
+  <div class="fac-hero">
+    <img src="images/gymflix-06-facility.png"
+         alt="짐플릭스 신진주역점 300평 규모 헬스장 시설 전경 — 프리웨이트존, 유산소 기구, 머신존"
+         loading="lazy"
+         class="img-photo">
+    <div class="fac-hero-overlay" aria-hidden="true"></div>
+    <div class="fac-hero-overlay" style="background:none;">
+      <div class="container">
+        <span class="stag fade-up">시설 안내</span>
+        <h2 class="font-black leading-tight fade-up d1"
+            style="font-size:clamp(22px,4vw,36px);">
+          한 달부터 시작해도<br>시설은 제대로 이용할 수 있습니다
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시설 특징 카드 -->
+  <div class="container" style="padding-top:40px;">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="fac-feat-card fade-up">
+        <p class="font-outfit font-black text-3xl mb-1" style="color:#E21D2F;">300<span class="text-xl text-gwhite font-bold ml-1">평</span></p>
+        <p class="text-sm" style="color:#A6A6A6;">넓은 프리웨이트존</p>
+      </div>
+      <div class="fac-feat-card fade-up d1">
+        <iconify-icon icon="solar:running-2-bold-duotone" width="26" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
+        <p class="font-bold text-sm mb-1">유산소 기구</p>
+        <p class="text-xs" style="color:#A6A6A6;">인텐자 스텝밀 4대 포함</p>
+      </div>
+      <div class="fac-feat-card fade-up d2">
+        <iconify-icon icon="solar:settings-bold-duotone" width="26" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
+        <p class="font-bold text-sm mb-1">고급 머신</p>
+        <p class="text-xs" style="color:#A6A6A6;">초보자도 이용하기 쉬운</p>
+      </div>
+      <div class="fac-feat-card fade-up d3">
+        <iconify-icon icon="solar:car-parking-bold" width="26" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
+        <p class="font-bold text-sm mb-1">주차 지원</p>
+        <p class="text-xs" style="color:#A6A6A6;">최대 3시간 무료</p>
+      </div>
+      <div class="fac-feat-card fade-up d4">
+        <iconify-icon icon="solar:star-bold-duotone" width="26" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
+        <p class="font-bold text-sm mb-1">VIP PT 공간</p>
+        <p class="text-xs" style="color:#A6A6A6;">별도 PT 전용 구역</p>
+      </div>
+      <div class="fac-feat-card fade-up d5 col-span-2 md:col-span-3">
+        <iconify-icon icon="solar:shield-check-bold-duotone" width="26" style="color:#E21D2F" class="mb-3 block"></iconify-icon>
+        <p class="font-bold text-sm mb-1">쾌적하고 정돈된 운동 환경</p>
+        <p class="text-xs" style="color:#A6A6A6;">기구 사이 여유로운 동선. 피크 타임에도 넓고 쾌적하게 운동할 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hdiv"></div>
+
+
+<!-- ═══════════════ ⑦ 이용방법 ═══════════════ -->
 <section id="how-to-use" style="background:#0d0d0d;">
   <div class="container">
-    <div class="text-center max-w-xl mx-auto mb-12 fade-up">
+    <div class="text-center max-w-xl mx-auto mb-8 fade-up">
       <span class="stag">이용방법</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight mb-4">
-        신청부터 운동 시작까지<br>복잡한 절차 없이
+      <h2 class="font-black" style="font-size:clamp(20px,4vw,30px);">
+        신청부터 운동 시작까지
       </h2>
-      <p class="text-ggray text-sm leading-relaxed">
+    </div>
+
+    <!-- IMAGE 10: 이용방법 4단계 인포그래픽 (contain, 기존 카드 대체) -->
+    <div class="fade-up d1">
+      <img src="images/gymflix-10-how-to-use.png"
+           alt="짐플릭스 이용방법 4단계: 1.구독 신청(이름·연락처 입력) → 2.매장 방문(문자/카카오 안내 확인) → 3.출입 등록(간단한 회원 등록) → 4.운동 시작(바로 전체 시설 이용)"
+           loading="lazy"
+           class="img-info"
+           onclick="openLightbox(this)">
+    </div>
+
+    <div class="text-center mt-8 fade-up d2">
+      <p class="leading-relaxed mb-6" style="font-size:15px;color:#A6A6A6;">
         장기 계약을 먼저 결정하거나<br>복잡한 상담을 받을 필요가 없습니다.
       </p>
-    </div>
-
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual fade-up d1"
-            onclick="openImageModal('images/gymflix/10-how-to-use.png','구독 신청부터 운동 시작까지 네 단계 이용방법 이미지')"
-            aria-label="이용방법 이미지 크게 보기">
-      <img src="images/gymflix/10-how-to-use.png" alt="구독 신청부터 운동 시작까지 네 단계 이용방법 이미지" loading="lazy" decoding="async">
-    </button>
-
-    <div class="max-w-2xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-2">
-        <div class="gcard p-6 fade-up d1">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4 font-outfit font-black text-lg" style="background:#E21D2F;color:#fff;">1</div>
-          <p class="font-bold mb-2">구독 신청</p>
-          <p class="text-ggray text-sm leading-relaxed">이름과 연락처만 입력하면 신청이 완료됩니다.</p>
-        </div>
-        <div class="gcard p-6 fade-up d2">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4 font-outfit font-black text-lg" style="background:rgba(226,29,47,0.15);color:#E21D2F;border:1px solid rgba(226,29,47,0.3);">2</div>
-          <p class="font-bold mb-2">매장 방문</p>
-          <p class="text-ggray text-sm leading-relaxed">문자 또는 카카오톡으로 받은 안내를 확인하고 방문합니다.</p>
-        </div>
-        <div class="gcard p-6 fade-up d3">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4 font-outfit font-black text-lg" style="background:rgba(226,29,47,0.15);color:#E21D2F;border:1px solid rgba(226,29,47,0.3);">3</div>
-          <p class="font-bold mb-2">출입 등록</p>
-          <p class="text-ggray text-sm leading-relaxed">매장에서 간단하게 회원 등록을 완료합니다.</p>
-        </div>
-        <div class="gcard p-6 fade-up d4">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4 font-outfit font-black text-lg" style="background:rgba(226,29,47,0.15);color:#E21D2F;border:1px solid rgba(226,29,47,0.3);">4</div>
-          <p class="font-bold mb-2">운동 시작</p>
-          <p class="text-ggray text-sm leading-relaxed">등록 후 바로 전체 시설을 자유롭게 이용할 수 있습니다.</p>
-        </div>
-      </div>
-
-      <div class="text-center mt-10 fade-up d5">
-        <a href="#form" class="btn-red text-base px-8 py-4">월 구독 상담받기</a>
-      </div>
+      <a href="#form" class="btn-red text-base px-8 py-4">월 구독 상담받기</a>
     </div>
   </div>
 </section>
@@ -885,94 +814,101 @@
 <div class="hdiv"></div>
 
 
-<!-- ⑧ 기구 사용법 -->
-<section id="equipment">
-  <div class="container">
-    <div class="max-w-xl mb-10 fade-up">
-      <span class="stag">기구 사용법</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight mb-4">
-        처음 보는 기구 앞에서<br>더 이상 망설이지 마세요
-      </h2>
-      <p class="text-ggray text-sm leading-relaxed">
-        짐플릭스 구독 회원이 운동을 쉽게 시작할 수 있도록<br>
-        트레이너가 직접 촬영한 8~12초 영상을 제공합니다.
-      </p>
+<!-- ═══════════════ ⑧ 기구 사용법 ═══════════════ -->
+<section id="equipment" style="padding:0 0 72px;">
+
+  <!-- IMAGE 12: 기구 사용법 배너 헤더 (cover) -->
+  <div class="eq-banner">
+    <img src="images/gymflix-12-machine-guide.png"
+         alt="트레이너가 회원에게 운동기구 사용법을 알려주는 모습"
+         loading="lazy">
+    <div class="eq-banner-overlay" aria-hidden="true"></div>
+    <div class="eq-banner-text">
+      <div class="container">
+        <!-- Image 12 already has "기구 사용법" text — section heading kept small for SEO -->
+        <span class="stag fade-up">기구 사용법</span>
+        <h2 class="font-black leading-tight fade-up d1"
+            style="font-size:clamp(20px,4vw,34px);">
+          운동기구가 낯설어도<br>혼자 헤매지 않도록
+        </h2>
+        <p class="mt-2 fade-up d2" style="font-size:14px;color:#A6A6A6;">
+          트레이너가 직접 촬영한 8~12초 영상을 제공합니다.
+        </p>
+      </div>
     </div>
-    <button type="button" class="media-frame media-contain media-16x9 zoomable section-visual fade-up d1"
-            onclick="openImageModal('images/gymflix/12-machine-guide.png','짐플릭스 기구 사용법 대표 이미지')"
-            aria-label="기구 사용법 대표 이미지 크게 보기">
-      <img src="images/gymflix/12-machine-guide.png" alt="짐플릭스 기구 사용법 대표 이미지" loading="lazy" decoding="async">
-    </button>
-    <div class="eq-slider pb-4 fade-up d1" id="equipmentSlider" aria-label="운동기구 사용법 영상" role="list"></div>
+  </div>
+
+  <!-- 기구 영상 카드 슬라이더 -->
+  <div class="container" style="padding-top:40px;">
+    <div class="eq-slider fade-up" id="equipmentSlider" role="list"></div>
   </div>
 </section>
 
 <div class="hdiv"></div>
 
 
-<!-- ⑨ 트레이너 소개 -->
+<!-- ═══════════════ ⑨ 트레이너 소개 ═══════════════ -->
 <section id="trainers" style="background:#0d0d0d;">
   <div class="container">
-    <div class="max-w-xl mb-2 fade-up">
+    <div class="max-w-xl mb-3 fade-up">
       <span class="stag">트레이너 소개</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight mb-4">
-        더 정확한 운동이 필요하다면<br>원하는 트레이너와 상담하세요
+      <h2 class="font-black leading-tight mb-4" style="font-size:clamp(22px,4vw,32px);">
+        운동 목적에 맞는<br>나만의 트레이너를 만나보세요
       </h2>
     </div>
 
+    <!-- 구독↔PT 분리 안내 -->
     <div class="max-w-xl mb-10 fade-up d1">
       <div class="gcard p-5" style="border-color:rgba(226,29,47,0.2);background:rgba(226,29,47,0.03);">
         <div class="flex items-start gap-3">
           <iconify-icon icon="solar:info-circle-bold-duotone" width="20" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
           <div>
             <p class="font-semibold text-sm mb-1">구독 회원권과 PT는 분리해서 선택할 수 있습니다.</p>
-            <p class="text-ggray text-sm leading-relaxed">
-              헬스장만 이용해도 됩니다. 필요한 경우, 전문 분야에 맞는 트레이너에게 별도로 PT 상담을 신청할 수 있습니다.
+            <p class="text-sm leading-relaxed" style="color:#A6A6A6;">
+              헬스장만 이용해도 됩니다. 필요한 경우 전문 분야에 맞는 트레이너에게 별도로 PT 상담을 신청할 수 있습니다.
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="t-slider pb-4 fade-up d2" id="trainerSlider" aria-label="트레이너 목록" role="list"></div>
+    <!-- 트레이너 카드 그리드 (Image 13 스타일 기준) -->
+    <div class="trainer-grid fade-up d2" id="trainerSlider" role="list"></div>
   </div>
 </section>
 
 <div class="hdiv"></div>
 
 
-<!-- ⑩ 구독 신청 폼 -->
+<!-- ═══════════════ ⑩ 구독 신청 폼 ═══════════════ -->
 <section id="form">
   <div class="container">
     <div class="max-w-lg mx-auto">
       <div class="text-center mb-10 fade-up">
         <span class="stag">구독 신청</span>
-        <h2 class="text-2xl md:text-3xl font-black leading-tight mb-3">
+        <h2 class="font-black leading-tight mb-3" style="font-size:clamp(22px,4vw,32px);">
           운동을 오래 할 수 있을지<br>고민만 하지 마세요
         </h2>
-        <p class="text-ggray text-sm leading-relaxed">
-          신청 정보를 남겨주시면<br>
-          문자와 카카오톡으로 방문 및 이용방법을 안내해드립니다.
+        <p class="leading-relaxed text-sm" style="color:#A6A6A6;">
+          신청 정보를 남겨주시면<br>문자와 카카오톡으로 방문 및 이용방법을 안내해드립니다.
         </p>
       </div>
 
       <form id="gymForm" onsubmit="handleSubmit(event)" novalidate class="space-y-4 fade-up d1">
         <div>
           <label for="name" class="block text-sm font-semibold mb-2">이름 <span style="color:#E21D2F;">*</span></label>
-          <input type="text" id="name" name="name" class="finput" placeholder="홍길동" autocomplete="name" aria-required="true">
-          <p class="ferr" id="name-err" role="alert">이름을 입력해주세요.</p>
+          <input type="text" id="name" name="name" class="finput" placeholder="홍길동" autocomplete="name">
+          <p class="ferr" id="name-err">이름을 입력해주세요.</p>
         </div>
-
         <div>
           <label for="phone" class="block text-sm font-semibold mb-2">휴대전화 번호 <span style="color:#E21D2F;">*</span></label>
           <input type="tel" id="phone" name="phone" class="finput" placeholder="010-0000-0000"
-                 autocomplete="tel" aria-required="true" oninput="formatPhone(this)">
-          <p class="ferr" id="phone-err" role="alert">올바른 전화번호를 입력해주세요. (예: 010-1234-5678)</p>
+                 autocomplete="tel" oninput="formatPhone(this)">
+          <p class="ferr" id="phone-err">올바른 전화번호를 입력해주세요. (예: 010-1234-5678)</p>
         </div>
-
         <div>
           <label for="purpose" class="block text-sm font-semibold mb-2">신청 목적 <span style="color:#E21D2F;">*</span></label>
-          <select id="purpose" name="purpose" class="finput" aria-required="true" onchange="handlePurposeChange(this.value)">
+          <select id="purpose" name="purpose" class="finput" onchange="handlePurposeChange(this.value)">
             <option value="" disabled selected>신청 목적을 선택해주세요</option>
             <option value="subscription">월 구독 신청</option>
             <option value="visit">방문 상담</option>
@@ -980,12 +916,11 @@
             <option value="trainer">트레이너 상담</option>
             <option value="inquiry">시설 및 가격 문의</option>
           </select>
-          <p class="ferr" id="purpose-err" role="alert">신청 목적을 선택해주세요.</p>
+          <p class="ferr" id="purpose-err">신청 목적을 선택해주세요.</p>
         </div>
-
         <div id="pt-extra" class="space-y-4 hidden">
           <div style="border-left:2px solid rgba(226,29,47,0.4);padding-left:16px;">
-            <p class="text-xs text-ggray mb-4">PT 체험 추가 정보</p>
+            <p class="text-xs mb-4" style="color:#A6A6A6;">PT 체험 추가 정보</p>
             <div class="mb-4">
               <label for="preferred-trainer" class="block text-sm font-semibold mb-2">희망 트레이너</label>
               <select id="preferred-trainer" name="preferredTrainer" class="finput">
@@ -1018,41 +953,38 @@
             </div>
           </div>
         </div>
-
         <div>
           <label for="preferred-time" class="block text-sm font-semibold mb-2">상담 희망 시간 <span style="color:#E21D2F;">*</span></label>
-          <select id="preferred-time" name="preferredTime" class="finput" aria-required="true">
+          <select id="preferred-time" name="preferredTime" class="finput">
             <option value="" disabled selected>희망 시간을 선택해주세요</option>
             <option value="morning">오전 (10시~12시)</option>
             <option value="afternoon">오후 (13시~17시)</option>
             <option value="evening">저녁 (18시~21시)</option>
             <option value="anytime">상관없음</option>
           </select>
-          <p class="ferr" id="time-err" role="alert">상담 희망 시간을 선택해주세요.</p>
+          <p class="ferr" id="time-err">상담 희망 시간을 선택해주세요.</p>
         </div>
-
         <div class="gcard p-5 space-y-4">
           <div class="flex items-start gap-3">
-            <input type="checkbox" id="privacy-agree" name="privacyAgree" class="cbox mt-0.5" aria-required="true">
+            <input type="checkbox" id="privacy-agree" class="cbox mt-0.5">
             <label for="privacy-agree" class="text-sm leading-relaxed cursor-pointer">
               <span class="font-semibold">[필수]</span> 개인정보 수집 및 이용에 동의합니다.
-              <button type="button" onclick="openPrivacyModal()" class="text-ggray underline ml-1 text-xs">자세히 보기</button>
+              <button type="button" onclick="openPrivacyModal()" class="underline ml-1 text-xs" style="color:#A6A6A6;">자세히 보기</button>
             </label>
           </div>
-          <p class="ferr" id="privacy-err" role="alert">개인정보 수집 및 이용에 동의해주세요.</p>
+          <p class="ferr" id="privacy-err">개인정보 수집 및 이용에 동의해주세요.</p>
           <div class="flex items-start gap-3">
-            <input type="checkbox" id="marketing-agree" name="marketingAgree" class="cbox mt-0.5">
+            <input type="checkbox" id="marketing-agree" class="cbox mt-0.5">
             <label for="marketing-agree" class="text-sm leading-relaxed cursor-pointer">
-              <span class="font-semibold text-ggray">[선택]</span> 광고성 문자 및 카카오톡 수신에 동의합니다.
+              <span class="font-semibold" style="color:#A6A6A6;">[선택]</span> 광고성 문자 및 카카오톡 수신에 동의합니다.
             </label>
           </div>
         </div>
-
         <button type="submit" class="btn-red w-full py-4 text-base font-bold mt-2">
           짐플릭스 구독 신청하기
           <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
         </button>
-        <p class="text-center text-ggray text-xs pt-1">신청 후 영업시간 내 담당자가 직접 연락드립니다.</p>
+        <p class="text-center text-xs pt-1" style="color:#A6A6A6;">신청 후 영업시간 내 담당자가 직접 연락드립니다.</p>
       </form>
     </div>
   </div>
@@ -1066,16 +998,15 @@
   <div class="container">
     <div class="text-center max-w-xl mx-auto mb-10 fade-up">
       <span class="stag">오시는 길</span>
-      <h2 class="text-2xl md:text-3xl font-black leading-tight">
+      <h2 class="font-black leading-tight" style="font-size:clamp(20px,4vw,30px);">
         신진주역 생활권에서<br>편하게 운동하세요
       </h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
       <div class="fade-up d1">
-        <!-- MAP_REPLACE: 네이버 지도 iframe 삽입 위치 -->
-        <div class="imgph rounded-2xl overflow-hidden" style="height:300px;">
-          <iconify-icon icon="solar:map-bold-duotone" width="56"></iconify-icon>
-          <span class="imgph-lbl">네이버 지도 삽입 위치<br>iframe 또는 지도 이미지 교체</span>
+        <div class="rounded-2xl overflow-hidden" style="height:300px;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+          <iconify-icon icon="solar:map-bold-duotone" width="56" style="color:#E21D2F;opacity:.4;"></iconify-icon>
+          <p style="color:#555;font-size:12px;text-align:center;">네이버 지도 iframe 삽입 위치<br>MAP_REPLACE</p>
         </div>
       </div>
       <div class="space-y-4 fade-up d2">
@@ -1084,8 +1015,7 @@
             <iconify-icon icon="solar:map-point-bold" width="22" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
             <div>
               <p class="font-semibold mb-1">주소</p>
-              <!-- ADDRESS_REPLACE -->
-              <p class="text-ggray text-sm leading-relaxed">경남 진주시 신진주역로 000</p>
+              <p class="text-sm leading-relaxed" style="color:#A6A6A6;">경남 진주시 신진주역로 000</p>
             </div>
           </div>
         </div>
@@ -1094,8 +1024,7 @@
             <iconify-icon icon="solar:clock-circle-bold" width="22" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
             <div>
               <p class="font-semibold mb-1">운영시간</p>
-              <!-- HOURS_REPLACE -->
-              <p class="text-ggray text-sm leading-relaxed">평일 06:00 – 23:00<br>주말 · 공휴일 08:00 – 20:00</p>
+              <p class="text-sm leading-relaxed" style="color:#A6A6A6;">평일 06:00 – 23:00<br>주말 · 공휴일 08:00 – 20:00</p>
             </div>
           </div>
         </div>
@@ -1104,16 +1033,14 @@
             <iconify-icon icon="solar:car-parking-bold" width="22" style="color:#E21D2F;flex-shrink:0;margin-top:2px"></iconify-icon>
             <div>
               <p class="font-semibold mb-1">주차 안내</p>
-              <p class="text-ggray text-sm">주차 최대 3시간 무료 지원</p>
+              <p class="text-sm" style="color:#A6A6A6;">최대 3시간 무료 지원</p>
             </div>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
-          <!-- NAVERMAP_REPLACE -->
           <a href="https://naver.me/PLACEHOLDER" target="_blank" rel="noopener" class="btn-red py-3.5 text-sm">
-            <iconify-icon icon="solar:map-point-bold" width="16"></iconify-icon>네이버지도 길찾기
+            <iconify-icon icon="solar:map-point-bold" width="16"></iconify-icon>네이버지도
           </a>
-          <!-- PHONE_REPLACE -->
           <a href="tel:000-0000-0000" class="btn-outline py-3.5 text-sm">
             <iconify-icon icon="solar:phone-calling-bold" width="16"></iconify-icon>전화 문의
           </a>
@@ -1128,10 +1055,10 @@
 
 <!-- FAQ -->
 <section id="faq">
-  <div class="container max-w-2xl">
+  <div class="container" style="max-width:720px;">
     <div class="text-center mb-10 fade-up">
       <span class="stag">자주 묻는 질문</span>
-      <h2 class="text-2xl md:text-3xl font-black">FAQ</h2>
+      <h2 class="font-black text-2xl">FAQ</h2>
     </div>
     <div id="faqList" class="space-y-3 fade-up d1" role="list"></div>
   </div>
@@ -1140,79 +1067,77 @@
 <div class="hdiv"></div>
 
 
-<!-- 마지막 신청 유도 -->
+<!-- Final CTA -->
 <section id="final-cta" class="relative overflow-hidden red-glow" style="background:#050505;padding:100px 0;">
   <div class="container text-center relative z-10">
     <div class="max-w-lg mx-auto fade-up">
-      <p class="text-ggray text-base mb-6 leading-relaxed">
-        운동을 오래 할 수 있을지<br>고민만 하지 마세요.
-      </p>
-      <h2 class="font-black text-2xl md:text-3xl leading-tight mb-6">
+      <p class="mb-6 leading-relaxed" style="color:#A6A6A6;">운동을 오래 할 수 있을지 고민만 하지 마세요.</p>
+      <h2 class="font-black leading-tight mb-6" style="font-size:clamp(20px,4vw,30px);">
         처음부터 12개월을 결정하지 않아도 됩니다.<br>
         짐플릭스에서 <span style="color:#E21D2F;">한 달부터</span> 직접 시작해보세요.
       </h2>
-      <p class="font-outfit font-black mb-10" style="font-size:clamp(44px,11vw,72px);color:#E21D2F;line-height:1;">
+      <p class="font-outfit font-black mb-10"
+         style="font-size:clamp(44px,11vw,72px);color:#E21D2F;line-height:1;">
         38,900<span class="text-3xl text-gwhite font-bold ml-1">원</span>
-        <span class="text-lg text-ggray font-normal ml-2">/월</span>
+        <span class="text-lg font-normal ml-2" style="color:#A6A6A6;">/월</span>
       </p>
       <a href="#form" class="btn-red text-lg px-10 py-5 mb-6 inline-flex">
         짐플릭스 구독 신청하기
         <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
       </a>
-      <p class="text-ggray text-sm">신청 후 문자와 카카오톡으로<br>방문 및 이용방법을 안내해드립니다.</p>
+      <p class="text-sm" style="color:#A6A6A6;">신청 후 문자와 카카오톡으로 방문 및 이용방법을 안내해드립니다.</p>
     </div>
   </div>
 </section>
 
 
-<!-- 푸터 -->
+<!-- Footer -->
 <footer style="background:#080808;border-top:1px solid rgba(255,255,255,0.05);padding:48px 0 40px;">
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
       <div>
         <p class="font-outfit font-black text-xl tracking-[0.2em] mb-3">GYMFLIX</p>
-        <p class="text-ggray text-sm mb-1">짐플릭스 신진주역점</p>
-        <p class="text-ggray leading-relaxed" style="font-size:12px;">경남 진주시 신진주역로 000</p>
+        <p class="text-sm mb-1" style="color:#A6A6A6;">짐플릭스 신진주역점</p>
+        <p class="leading-relaxed" style="font-size:12px;color:#A6A6A6;">경남 진주시 신진주역로 000</p>
       </div>
       <div>
         <p class="font-semibold text-sm mb-3">이용 안내</p>
-        <ul class="space-y-2 text-ggray" style="font-size:13px;">
+        <ul class="space-y-2" style="font-size:13px;color:#A6A6A6;">
           <li>대표전화: <a href="tel:000-0000-0000" class="hover:text-gwhite transition-colors">000-0000-0000</a></li>
           <li>평일 06:00 – 23:00</li>
           <li>주말 08:00 – 20:00</li>
-          <li class="pt-2" style="font-size:11px;">사업자등록번호: 000-00-00000<br>대표: 000</li>
+          <li class="pt-2" style="font-size:11px;">사업자등록번호: 000-00-00000</li>
         </ul>
       </div>
       <div>
         <p class="font-semibold text-sm mb-3">바로가기</p>
         <ul class="space-y-2" style="font-size:13px;">
-          <li><a href="https://www.instagram.com/PLACEHOLDER" target="_blank" rel="noopener" class="text-ggray hover:text-gwhite transition-colors flex items-center gap-2"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon>인스타그램</a></li>
-          <li><a href="https://naver.me/PLACEHOLDER" target="_blank" rel="noopener" class="text-ggray hover:text-gwhite transition-colors flex items-center gap-2"><iconify-icon icon="solar:map-point-linear" width="16"></iconify-icon>네이버 스마트플레이스</a></li>
-          <li><button onclick="openPrivacyModal()" class="text-ggray hover:text-gwhite transition-colors text-left">개인정보처리방침</button></li>
-          <li><button onclick="alert('이용약관 페이지 준비 중입니다.')" class="text-ggray hover:text-gwhite transition-colors text-left">이용약관</button></li>
+          <li><a href="#" class="hover:text-gwhite transition-colors flex items-center gap-2" style="color:#A6A6A6;"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon>인스타그램</a></li>
+          <li><a href="https://naver.me/PLACEHOLDER" target="_blank" rel="noopener" class="hover:text-gwhite transition-colors flex items-center gap-2" style="color:#A6A6A6;"><iconify-icon icon="solar:map-point-linear" width="16"></iconify-icon>네이버 스마트플레이스</a></li>
+          <li><button onclick="openPrivacyModal()" class="hover:text-gwhite transition-colors text-left" style="color:#A6A6A6;">개인정보처리방침</button></li>
         </ul>
       </div>
     </div>
     <div class="hdiv mb-6"></div>
-    <p class="text-center text-ggray" style="font-size:12px;">© 2025 짐플릭스 신진주역점. All rights reserved.</p>
+    <p class="text-center" style="font-size:12px;color:#444;">© 2025 짐플릭스 신진주역점. All rights reserved.</p>
   </div>
 </footer>
 
 
 <!-- 모바일 하단 고정 CTA -->
-<div id="fixed-cta" class="fixed-cta" role="complementary" aria-label="구독 신청 빠른 링크">
-  <div class="fixed-cta-row">
-    <div class="fixed-cta-price">
-      <p class="text-xs text-ggray">월 이용료</p>
+<div id="fixed-cta" class="fixed-cta">
+  <div class="flex items-center gap-3">
+    <div class="flex-1">
+      <p class="text-xs" style="color:#A6A6A6;">월 이용료</p>
       <p class="font-outfit font-black text-lg leading-none" style="color:#E21D2F;">38,900<span class="text-sm text-gwhite font-semibold ml-0.5">원</span></p>
     </div>
-    <a href="#form" class="btn-red fixed-cta-action font-bold">한 달 구독 시작하기</a>
+    <a href="#form" class="btn-red flex-shrink-0 px-6 py-3.5 text-sm font-bold">한 달 구독 시작하기</a>
   </div>
 </div>
 
 
-<!-- 영상 모달 -->
-<div id="video-modal" class="overlay" role="dialog" aria-modal="true" onclick="handleModalOverlayClick(event,'video-modal')">
+<!-- ═══ 영상 모달 ═══ -->
+<div id="video-modal" class="overlay" onclick="handleModalOverlayClick(event,'video-modal')">
   <div class="modal-box" onclick="event.stopPropagation()">
     <div class="flex items-center justify-between mb-4">
       <h3 class="font-bold text-lg" id="video-modal-title">기구 사용법</h3>
@@ -1220,46 +1145,46 @@
         <iconify-icon icon="solar:close-linear" width="20"></iconify-icon>
       </button>
     </div>
-    <!-- VIDEO_REPLACE: videoUrl 설정 시 아래 플레이스홀더 대신 <video> 태그 활성화 -->
     <div id="video-container" class="imgph rounded-xl overflow-hidden mb-4" style="aspect-ratio:9/16;max-height:420px;">
       <iconify-icon icon="solar:play-circle-bold-duotone" width="64"></iconify-icon>
-      <span class="imgph-lbl">영상 플레이어<br>videoUrl 설정 후 활성화</span>
+      <span class="imgph-lbl">videoUrl 설정 후 활성화</span>
     </div>
     <div class="space-y-1 mb-5">
       <p class="font-semibold" id="video-modal-machine"></p>
-      <p class="text-ggray text-sm" id="video-modal-target"></p>
+      <p class="text-sm" id="video-modal-target" style="color:#A6A6A6;"></p>
       <p class="text-sm mt-2" id="video-modal-desc"></p>
     </div>
     <div class="pt-4 border-t border-white/5">
-      <p class="text-xs text-ggray mb-3">영상을 제공한 트레이너</p>
-      <button id="video-modal-trainer-btn" onclick="scrollToTrainer()" class="btn-red px-5 py-3 text-sm w-full">PT 상담 신청하기</button>
+      <p class="text-xs mb-3" style="color:#A6A6A6;">영상을 제공한 트레이너</p>
+      <button id="video-modal-trainer-btn" onclick="scrollToTrainers()" class="btn-red px-5 py-3 text-sm w-full">PT 상담 신청하기</button>
     </div>
   </div>
 </div>
 
-<!-- 완료 모달 -->
-<div id="success-modal" class="overlay" role="dialog" aria-modal="true" onclick="handleModalOverlayClick(event,'success-modal')">
+<!-- ═══ 완료 모달 ═══ -->
+<div id="success-modal" class="overlay" onclick="handleModalOverlayClick(event,'success-modal')">
   <div class="modal-box text-center" onclick="event.stopPropagation()">
-    <div class="w-18 h-18 rounded-full flex items-center justify-center mx-auto mb-5" style="width:72px;height:72px;background:rgba(226,29,47,0.12);">
+    <div class="w-18 h-18 rounded-full flex items-center justify-center mx-auto mb-5"
+         style="width:72px;height:72px;background:rgba(226,29,47,0.12);">
       <iconify-icon icon="solar:check-circle-bold-duotone" width="40" style="color:#E21D2F;"></iconify-icon>
     </div>
     <h2 class="text-xl font-black mb-3">신청이 완료되었습니다</h2>
-    <p class="text-ggray text-sm leading-relaxed mb-8">
+    <p class="text-sm leading-relaxed mb-8" style="color:#A6A6A6;">
       입력해주신 연락처로<br>짐플릭스 신진주역점 이용 안내와<br>방문 방법을 보내드립니다.<br><br>문자 또는 카카오톡을 확인해주세요.
     </p>
     <div class="gcard p-4 mb-8">
       <p class="font-outfit font-black tracking-widest text-sm mb-1">GYMFLIX SINJINJU</p>
-      <p class="text-ggray text-xs">한 달부터 시작하는 헬스 구독</p>
+      <p class="text-xs" style="color:#A6A6A6;">한 달부터 시작하는 헬스 구독</p>
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="closeModal('success-modal')" class="btn-outline py-3 text-sm">홈으로 돌아가기</button>
-      <a href="#location" onclick="closeModal('success-modal')" class="btn-red py-3 text-sm">위치 확인하기</a>
+      <button onclick="closeModal('success-modal')" class="btn-outline py-3 text-sm">홈으로</button>
+      <a href="#location" onclick="closeModal('success-modal')" class="btn-red py-3 text-sm">위치 확인</a>
     </div>
   </div>
 </div>
 
-<!-- 개인정보 모달 -->
-<div id="privacy-modal" class="overlay" role="dialog" aria-modal="true" onclick="handleModalOverlayClick(event,'privacy-modal')">
+<!-- ═══ 개인정보 모달 ═══ -->
+<div id="privacy-modal" class="overlay" onclick="handleModalOverlayClick(event,'privacy-modal')">
   <div class="modal-box" onclick="event.stopPropagation()">
     <div class="flex items-center justify-between mb-5">
       <h3 class="font-bold text-base">개인정보 수집 및 이용 동의</h3>
@@ -1267,58 +1192,36 @@
         <iconify-icon icon="solar:close-linear" width="20"></iconify-icon>
       </button>
     </div>
-    <div class="text-ggray text-sm leading-relaxed space-y-4" style="max-height:60vh;overflow-y:auto;">
-      <div><p class="font-semibold text-gwhite mb-2">수집하는 개인정보 항목</p><p>이름, 휴대전화 번호, 신청 목적, 상담 희망 시간</p></div>
-      <div><p class="font-semibold text-gwhite mb-2">수집 및 이용 목적</p><p>구독 상담 안내, 이용방법 안내, 상담 일정 조율</p></div>
-      <div><p class="font-semibold text-gwhite mb-2">보유 및 이용 기간</p><p>상담 완료 후 1년 또는 회원 탈퇴 시까지</p></div>
-      <div><p class="font-semibold text-gwhite mb-2">동의 거부 시 불이익</p><p>개인정보 수집에 동의하지 않을 경우 상담 신청이 불가능합니다.</p></div>
+    <div class="text-sm leading-relaxed space-y-4" style="color:#A6A6A6;max-height:60vh;overflow-y:auto;">
+      <div><p class="font-semibold text-gwhite mb-1">수집하는 개인정보 항목</p><p>이름, 휴대전화 번호, 신청 목적, 상담 희망 시간</p></div>
+      <div><p class="font-semibold text-gwhite mb-1">수집 및 이용 목적</p><p>구독 상담 안내, 이용방법 안내, 상담 일정 조율</p></div>
+      <div><p class="font-semibold text-gwhite mb-1">보유 및 이용 기간</p><p>상담 완료 후 1년 또는 회원 탈퇴 시까지</p></div>
+      <div><p class="font-semibold text-gwhite mb-1">동의 거부 시 불이익</p><p>개인정보 수집에 동의하지 않을 경우 상담 신청이 불가능합니다.</p></div>
     </div>
     <button onclick="closeModal('privacy-modal')" class="btn-red w-full py-3.5 mt-5 text-sm">확인했습니다</button>
   </div>
 </div>
 
-<!-- 이미지 확대 모달 -->
-<div id="image-modal" class="overlay" role="dialog" aria-modal="true" onclick="handleModalOverlayClick(event,'image-modal')">
-  <div class="modal-box image-modal-box" onclick="event.stopPropagation()">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <p class="text-sm font-semibold" id="image-modal-title">이미지 크게 보기</p>
-      <button onclick="closeModal('image-modal')" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="닫기">
-        <iconify-icon icon="solar:close-linear" width="20"></iconify-icon>
-      </button>
-    </div>
-    <img id="image-modal-img" src="" alt="">
+<!-- ═══ 이미지 라이트박스 ═══ -->
+<div id="lightbox" class="overlay" onclick="closeModal('lightbox')">
+  <button class="lb-close" onclick="closeModal('lightbox')" aria-label="닫기">
+    <iconify-icon icon="solar:close-bold" width="20"></iconify-icon>
+  </button>
+  <div id="lightbox-inner" class="modal-box" onclick="event.stopPropagation()">
+    <img id="lightbox-img" src="" alt="" style="display:block;max-width:88vw;height:auto;border-radius:8px;">
   </div>
 </div>
 
 
 <script>
-/* ============================================================
-   DATA ARRAYS
-   ============================================================ */
-
-const PAIN_DATA = [
-  { icon: 'solar:calendar-bold-duotone',          text: '장기회원권을 등록하고 몇 번 가지 못했다' },
-  { icon: 'solar:question-circle-bold-duotone',   text: '헬스장이 나와 맞을지 걱정된다' },
-  { icon: 'solar:wallet-bold-duotone',            text: '한 번에 큰 금액을 결제하기 부담스럽다' },
-  { icon: 'solar:sun-bold-duotone',               text: '방학이나 휴가 전 잠깐 운동하고 싶다' },
-];
-
-/**
- * BENEFITS_DATA — active: false 항목은 미노출.
- * 운영 확정 시 active: true 로 변경하면 즉시 반영됩니다.
- */
-const BENEFITS_DATA = [
-  { id:1, icon:'solar:hand-stars-bold-duotone',              title:'초보자 오리엔테이션',   desc:'처음 방문 시 시설 이용 방법을 안내해드립니다',         active:true  },
-  { id:2, icon:'solar:users-group-rounded-bold-duotone',     title:'친구 추천 PT 2회',      desc:'소중한 분을 소개해주시면 PT 세션을 제공합니다',         active:true  },
-  { id:3, icon:'solar:medal-ribbons-star-bold-duotone',      title:'출석 리워드',           desc:'꾸준한 출석에 보상이 주어집니다',                       active:false },
-  { id:4, icon:'solar:gift-bold-duotone',                    title:'장기 구독 리워드',      desc:'구독을 이어갈수록 더 큰 혜택을 드립니다',               active:false },
-  { id:5, icon:'solar:health-bold-duotone',                  title:'인바디 및 운동 상담',   desc:'체성분 측정과 운동 방향 상담을 받을 수 있습니다',       active:true  },
-];
+/* ════════════════════════════════════════════
+   DATA
+   ════════════════════════════════════════════ */
 
 const TRAINER_DATA = [
   {
     id:1, name:'김명준', position:'퍼스널 트레이너',
-    image:null, // IMAGE_REPLACE: 'images/trainer_kim.jpg'
+    image:null,
     slogan:'확실하게 잡아주는 PT가 되겠습니다.',
     specialties:['근력 증가','체형 개선','초보자 PT'],
     career:['대형 스포츠센터 5년 경력','프리랜서 트레이너 3년'],
@@ -1329,18 +1232,18 @@ const TRAINER_DATA = [
   },
   {
     id:2, name:'이서연', position:'퍼스널 트레이너',
-    image:null, // IMAGE_REPLACE: 'images/trainer_lee.jpg'
+    image:null,
     slogan:'목표를 함께 정하고, 함께 달성합니다.',
     specialties:['다이어트','체지방 감소','여성 PT'],
     career:['헬스장 전속 트레이너 4년','다이어트 전문 강사 수료'],
     certifications:['스포츠지도사 2급','ACSM-CPT'],
     teachingStyle:'꾸준한 습관 형성과 유산소 병행',
-    introduction:'다이어트와 체지방 감소를 목표로 하는 회원에게 체계적인 식이 조언과 유산소 운동을 지도합니다.',
+    introduction:'다이어트와 체지방 감소를 목표로 하는 회원에게 체계적인 식이 조언과 운동을 지도합니다.',
     reservationLink:'#form',
   },
   {
     id:3, name:'최도윤', position:'퍼스널 트레이너',
-    image:null, // IMAGE_REPLACE: 'images/trainer_choi.jpg'
+    image:null,
     slogan:'바디프로필부터 일상 근력까지, 함께 만듭니다.',
     specialties:['바디프로필','근비대','중급자 PT'],
     career:['보디빌딩 대회 입상 경력','전문 트레이너 6년'],
@@ -1352,76 +1255,45 @@ const TRAINER_DATA = [
 ];
 
 const EQUIPMENT_DATA = [
-  { id:1, machineName:'시티드 로우',          targetArea:'등 · 광배근',      description:'팔보다 등을 사용해 당기는 머신',            thumbnail:null, videoUrl:'', trainerName:'최도윤', trainerId:3 },
-  { id:2, machineName:'레그 프레스',           targetArea:'허벅지 · 대퇴사두', description:'무릎 각도를 맞추고 발판을 미는 머신',        thumbnail:null, videoUrl:'', trainerName:'김명준', trainerId:1 },
-  { id:3, machineName:'인클라인 덤벨 프레스', targetArea:'가슴 · 상흉근',    description:'각도를 높여 상부 가슴을 자극하는 동작',      thumbnail:null, videoUrl:'', trainerName:'이서연', trainerId:2 },
-  { id:4, machineName:'케이블 푸시다운',       targetArea:'삼두 · 팔',        description:'케이블을 내려눌러 팔 뒤쪽을 강화하는 동작',  thumbnail:null, videoUrl:'', trainerName:'최도윤', trainerId:3 },
-  { id:5, machineName:'랫 풀다운',             targetArea:'등 · 광배근',      description:'바를 당겨 내리며 날개 근육을 키우는 머신',   thumbnail:null, videoUrl:'', trainerName:'김명준', trainerId:1 },
+  {id:1,machineName:'시티드 로우',     targetArea:'등 · 광배근',       description:'팔보다 등을 사용해 당기는 머신',             thumbnail:null,videoUrl:'',trainerName:'최도윤',trainerId:3},
+  {id:2,machineName:'레그 프레스',      targetArea:'허벅지 · 대퇴사두',  description:'무릎 각도를 맞추고 발판을 미는 머신',          thumbnail:null,videoUrl:'',trainerName:'김명준',trainerId:1},
+  {id:3,machineName:'인클라인 덤벨 프레스',targetArea:'가슴 · 상흉근',  description:'각도를 높여 상부 가슴을 자극하는 동작',          thumbnail:null,videoUrl:'',trainerName:'이서연',trainerId:2},
+  {id:4,machineName:'케이블 푸시다운',   targetArea:'삼두 · 팔',        description:'케이블을 내려눌러 팔 뒤쪽을 강화하는 동작',      thumbnail:null,videoUrl:'',trainerName:'최도윤',trainerId:3},
+  {id:5,machineName:'랫 풀다운',        targetArea:'등 · 광배근',       description:'바를 당겨 내리며 날개 근육을 키우는 머신',        thumbnail:null,videoUrl:'',trainerName:'김명준',trainerId:1},
 ];
 
 const FAQ_DATA = [
-  { question:'구독은 꼭 장기간 이용해야 하나요?',     answer:'아니요. 한 달부터 시작할 수 있어 장기 이용권이 부담스러운 분도 편하게 이용할 수 있습니다.' },
-  { question:'월 이용료는 얼마인가요?',               answer:'짐플릭스 신진주역점의 월 구독료는 38,900원입니다. 선택 서비스와 추가 사항은 상담 시 안내드립니다.' },
-  { question:'PT를 꼭 등록해야 하나요?',              answer:'아니요. 헬스 구독만 이용할 수 있으며, 자세한 운동 지도가 필요한 경우 원하는 트레이너에게 별도로 상담할 수 있습니다.' },
-  { question:'운동을 처음 시작해도 괜찮나요?',         answer:'네. 주요 운동기구 사용법을 짧은 영상으로 확인할 수 있으며, 필요한 경우 트레이너 상담도 가능합니다.' },
-  { question:'주차가 가능한가요?',                    answer:'차량 방문 시 주차장을 이용할 수 있으며, 최대 3시간 주차를 지원합니다.' },
-  { question:'트레이너는 어떻게 선택하나요?',          answer:'페이지에서 각 트레이너의 전문 분야, 경력과 수업 스타일을 확인한 뒤 원하는 트레이너에게 PT 체험을 신청할 수 있습니다.' },
+  {question:'구독은 꼭 장기간 이용해야 하나요?',   answer:'아니요. 한 달부터 시작할 수 있어 장기 이용권이 부담스러운 분도 편하게 이용할 수 있습니다.'},
+  {question:'월 이용료는 얼마인가요?',             answer:'짐플릭스 신진주역점의 월 구독료는 38,900원입니다. 선택 서비스와 추가 사항은 상담 시 안내드립니다.'},
+  {question:'PT를 꼭 등록해야 하나요?',            answer:'아니요. 헬스 구독만 이용할 수 있으며, 필요한 경우 원하는 트레이너에게 별도로 PT 상담을 신청할 수 있습니다.'},
+  {question:'운동을 처음 시작해도 괜찮나요?',       answer:'네. 주요 운동기구 사용법을 짧은 영상으로 확인할 수 있으며, 필요한 경우 트레이너 상담도 가능합니다.'},
+  {question:'주차가 가능한가요?',                  answer:'차량 방문 시 주차장을 이용할 수 있으며, 최대 3시간 주차를 지원합니다.'},
+  {question:'트레이너는 어떻게 선택하나요?',        answer:'페이지에서 각 트레이너의 전문 분야와 수업 스타일을 확인한 뒤 원하는 트레이너에게 PT 체험을 신청할 수 있습니다.'},
 ];
 
 const CONFIG = {
-  gymName: '짐플릭스 신진주역점',
-  address: '경남 진주시 신진주역로 000',   // ADDRESS_REPLACE
-  phone: '000-0000-0000',                 // PHONE_REPLACE
-  naverMapUrl: 'https://naver.me/PLACEHOLDER',
-  naverPlaceUrl: 'https://naver.me/PLACEHOLDER',
-  instagramUrl: 'https://www.instagram.com/PLACEHOLDER',
-  // TODO: SMS API
-  // smsApiEndpoint: 'https://api.example.com/sms',
-  // TODO: 카카오 알림톡 API
-  // kakaoApiEndpoint: '', kakaoTemplateId: '',
+  gymName:'짐플릭스 신진주역점',
+  address:'경남 진주시 신진주역로 000',
+  phone:'000-0000-0000',
+  naverMapUrl:'https://naver.me/PLACEHOLDER',
+  instagramUrl:'https://www.instagram.com/PLACEHOLDER',
 };
 
-/* ============================================================
+/* ════════════════════════════════════════════
    RENDER
-   ============================================================ */
-
-function renderPainPoints() {
-  const el = document.getElementById('painList'); if (!el) return;
-  el.innerHTML = PAIN_DATA.map((p,i) => `
-    <div class="pain-card fade-up d${i+1}" role="listitem">
-      <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-           style="background:rgba(255,255,255,0.05);">
-        <iconify-icon icon="${p.icon}" width="18" style="color:#A6A6A6"></iconify-icon>
-      </div>
-      <p class="text-sm leading-relaxed">${p.text}</p>
-    </div>`).join('');
-}
-
-function renderBenefits() {
-  const el = document.getElementById('benefitList'); if (!el) return;
-  const active = BENEFITS_DATA.filter(b => b.active);
-  el.innerHTML = active.map((b,i) => `
-    <div class="benefit-card fade-up d${i+1}" role="listitem">
-      <div class="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-           style="background:rgba(226,29,47,0.1);">
-        <iconify-icon icon="${b.icon}" width="26" style="color:#E21D2F"></iconify-icon>
-      </div>
-      <p class="font-bold text-sm mb-2">${b.title}</p>
-      <p class="text-ggray text-xs leading-relaxed">${b.desc}</p>
-    </div>`).join('');
-}
+   ════════════════════════════════════════════ */
 
 function renderEquipment() {
   const el = document.getElementById('equipmentSlider'); if (!el) return;
   el.innerHTML = EQUIPMENT_DATA.map(eq => `
     <div class="eq-card" role="listitem">
-      <div class="play-wrap" onclick="openVideo(${eq.id})" style="aspect-ratio:4/3;"
-           role="button" aria-label="${eq.machineName} 영상 재생" tabindex="0"
+      <div class="play-wrap" onclick="openVideo(${eq.id})"
+           style="aspect-ratio:4/3;" role="button" tabindex="0"
+           aria-label="${eq.machineName} 영상 재생"
            onkeydown="if(event.key==='Enter')openVideo(${eq.id})">
         ${eq.thumbnail
-          ? `<img src="${eq.thumbnail}" alt="${eq.machineName} 썸네일" class="w-full h-full object-cover" loading="lazy">`
-          : `<img src="images/gymflix/12-machine-guide.png" alt="${eq.machineName} 기구 사용법 대표 이미지" class="w-full h-full object-cover" loading="lazy" decoding="async">`
-        }
+          ? `<img src="${eq.thumbnail}" alt="${eq.machineName} 썸네일" class="img-photo" loading="lazy">`
+          : `<div class="imgph w-full h-full"><iconify-icon icon="solar:dumbbell-bold-duotone" width="36"></iconify-icon><span class="imgph-lbl" style="font-size:10px;">${eq.machineName}<br>영상 썸네일</span></div>`}
         <div class="play-btn"><iconify-icon icon="solar:play-bold" width="20" style="color:#fff;margin-left:3px"></iconify-icon></div>
       </div>
       <div class="p-4">
@@ -1431,11 +1303,12 @@ function renderEquipment() {
             <p class="text-xs mt-0.5" style="color:#E21D2F;">${eq.targetArea}</p>
           </div>
           <button onclick="openVideo(${eq.id})"
-                  class="text-xs px-3 py-1.5 rounded-full border border-white/10 text-ggray hover:border-gred hover:text-gwhite transition-colors flex-shrink-0">영상 보기</button>
+                  class="text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-colors"
+                  style="border:1px solid rgba(255,255,255,0.1);color:#A6A6A6;">영상 보기</button>
         </div>
-        <p class="text-ggray text-sm mb-4">${eq.description}</p>
+        <p class="text-sm mb-4" style="color:#A6A6A6;">${eq.description}</p>
         <div class="border-t border-white/5 pt-3 flex items-center justify-between">
-          <p class="text-xs text-ggray">${eq.trainerName} 트레이너</p>
+          <p class="text-xs" style="color:#A6A6A6;">${eq.trainerName} 트레이너</p>
           <a href="#form" class="text-xs px-3 py-1.5 rounded-full btn-red">PT 상담하기</a>
         </div>
       </div>
@@ -1445,25 +1318,46 @@ function renderEquipment() {
 function renderTrainers() {
   const el = document.getElementById('trainerSlider'); if (!el) return;
   el.innerHTML = TRAINER_DATA.map(t => `
-    <div class="t-card" role="listitem">
-      <div style="aspect-ratio:3/4;max-height:300px;overflow:hidden;">
-        ${t.image
-          ? `<img src="${t.image}" alt="${t.name} 트레이너 프로필" class="w-full h-full object-cover" loading="lazy">`
-          : `<div class="trainer-avatar" aria-label="${t.name} 트레이너 카드 스타일 이미지"><div class="trainer-avatar-badge">${t.name.charAt(0)}</div></div>`
-        }
+    <div class="t-card" role="listitem" onclick="openTrainerModal(${t.id})">
+      <!-- Image 13 스타일 헤더 바 -->
+      <div class="t-card-header">
+        <span class="font-outfit font-black text-xs tracking-widest text-white">GYMFLIX</span>
+        <span style="font-size:9px;color:rgba(255,255,255,0.65);letter-spacing:.1em;">PERSONAL TRAINING</span>
       </div>
-      <div class="p-5">
-        <div class="mb-3"><p class="font-black text-lg">${t.name}</p><p class="text-ggray text-xs">${t.position}</p></div>
-        <div class="flex flex-wrap gap-1.5 mb-4">
-          ${t.specialties.map(s=>`<span class="text-xs px-2.5 py-1 rounded-full" style="background:rgba(226,29,47,0.1);color:#E21D2F;border:1px solid rgba(226,29,47,0.18);">${s}</span>`).join('')}
+      <!-- 프로필 사진 -->
+      <div class="t-card-photo">
+        ${t.image
+          ? `<img src="${t.image}" alt="${t.name} 트레이너 프로필" class="img-photo" loading="lazy">`
+          : `<div class="imgph" style="width:100%;height:100%;min-height:220px;"><iconify-icon icon="solar:user-bold-duotone" width="52"></iconify-icon><span class="imgph-lbl" style="font-size:10px;">${t.name} 트레이너<br>프로필 사진</span></div>`}
+      </div>
+      <!-- 카드 본문 -->
+      <div class="t-card-body">
+        <p style="font-size:9px;color:#E21D2F;letter-spacing:.14em;font-weight:700;margin-bottom:5px;">TRAINER PROFILE</p>
+        <h3 class="font-black" style="font-size:20px;margin-bottom:3px;">${t.name}</h3>
+        <p style="font-size:11px;color:#A6A6A6;margin-bottom:12px;">${t.position}</p>
+        <a href="${t.reservationLink}" class="btn-red" style="font-size:12px;padding:8px 18px;margin-bottom:14px;"
+           onclick="event.stopPropagation()">
+          PT 체험 예약
+          <iconify-icon icon="solar:arrow-right-linear" width="12"></iconify-icon>
+        </a>
+        <p style="font-size:12px;color:#A6A6A6;font-style:italic;line-height:1.5;margin-bottom:12px;">"${t.slogan}"</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">
+          ${t.specialties.map(s=>`<span style="font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(226,29,47,0.1);color:#E21D2F;border:1px solid rgba(226,29,47,0.2);">${s}</span>`).join('')}
         </div>
-        <p class="text-sm italic text-ggray mb-3">"${t.slogan}"</p>
-        <p class="text-sm text-ggray leading-relaxed mb-4">${t.introduction}</p>
-        <div class="space-y-2 text-xs text-ggray mb-5">
-          <div class="flex items-start gap-2"><iconify-icon icon="solar:diploma-bold" width="13" style="flex-shrink:0;margin-top:2px"></iconify-icon><span>${t.certifications.join(' · ')}</span></div>
-          <div class="flex items-start gap-2"><iconify-icon icon="solar:pen-bold" width="13" style="flex-shrink:0;margin-top:2px"></iconify-icon><span>${t.teachingStyle}</span></div>
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:flex-start;gap:7px;">
+            <iconify-icon icon="solar:pen-2-bold" width="12" style="color:#A6A6A6;flex-shrink:0;margin-top:2px;"></iconify-icon>
+            <p style="font-size:11px;color:#A6A6A6;line-height:1.4;">${t.teachingStyle}</p>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:7px;">
+            <iconify-icon icon="solar:diploma-bold" width="12" style="color:#A6A6A6;flex-shrink:0;margin-top:2px;"></iconify-icon>
+            <p style="font-size:11px;color:#A6A6A6;line-height:1.4;">${t.certifications.join(' · ')}</p>
+          </div>
         </div>
-        <a href="${t.reservationLink}" class="btn-red py-3 text-sm w-full block text-center">${t.name} 트레이너 PT 체험 신청</a>
+      </div>
+      <!-- 푸터 바 -->
+      <div class="t-card-footer">
+        <p style="font-size:8px;color:#444;text-align:center;letter-spacing:.1em;font-family:'Outfit',sans-serif;">YOUR GOALS. OUR MISSION.</p>
       </div>
     </div>`).join('');
 }
@@ -1473,22 +1367,22 @@ function renderFAQ() {
   el.innerHTML = FAQ_DATA.map((f,i) => `
     <div class="gcard overflow-hidden" role="listitem">
       <button class="w-full flex items-center justify-between gap-4 p-5 text-left"
-              onclick="toggleFAQ(${i})" aria-expanded="false" aria-controls="faq-ans-${i}" id="faq-q-${i}">
+              onclick="toggleFAQ(${i})" aria-expanded="false" id="faq-q-${i}">
         <span class="font-semibold text-sm leading-relaxed flex-1">${f.question}</span>
-        <iconify-icon icon="solar:add-circle-linear" width="20" class="faq-icon flex-shrink-0 text-ggray" id="faq-icon-${i}"></iconify-icon>
+        <iconify-icon icon="solar:add-circle-linear" width="20" class="faq-icon flex-shrink-0" id="faq-icon-${i}" style="color:#A6A6A6;"></iconify-icon>
       </button>
-      <div class="faq-ans" id="faq-ans-${i}" role="region" aria-labelledby="faq-q-${i}">
-        <p class="px-5 pb-5 text-ggray text-sm leading-relaxed">${f.answer}</p>
+      <div class="faq-ans" id="faq-ans-${i}">
+        <p class="px-5 pb-5 text-sm leading-relaxed" style="color:#A6A6A6;">${f.answer}</p>
       </div>
     </div>`).join('');
 }
 
-/* ============================================================
+/* ════════════════════════════════════════════
    INTERACTIONS
-   ============================================================ */
+   ════════════════════════════════════════════ */
 
 function toggleMenu() {
-  const m=document.getElementById('mob-menu'), b=document.getElementById('hamburger');
+  const m=document.getElementById('mob-menu'),b=document.getElementById('hamburger');
   const o=m.classList.toggle('open');
   b.setAttribute('aria-expanded',String(o));
 }
@@ -1504,14 +1398,13 @@ document.addEventListener('click', e => {
   const t = document.getElementById(id);
   if (!t) return;
   e.preventDefault();
-  window.scrollTo({ top: t.offsetTop - 72, behavior: 'smooth' });
+  window.scrollTo({top:t.offsetTop-68,behavior:'smooth'});
   closeMenu();
 });
 
 function handlePurposeChange(v) {
   document.getElementById('pt-extra').classList.toggle('hidden', v!=='pt' && v!=='trainer');
 }
-
 function formatPhone(i) {
   let v=i.value.replace(/[^\d]/g,'');
   if(v.length<=3) i.value=v;
@@ -1519,7 +1412,6 @@ function formatPhone(i) {
   else if(v.length<=11) i.value=v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7);
   else i.value=v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7,11);
 }
-
 function toggleFAQ(i) {
   const a=document.getElementById(`faq-ans-${i}`);
   const ic=document.getElementById(`faq-icon-${i}`);
@@ -1536,29 +1428,27 @@ function openVideo(id) {
   document.getElementById('video-modal-target').textContent=eq.targetArea;
   document.getElementById('video-modal-desc').textContent=eq.description;
   document.getElementById('video-modal-trainer-btn').textContent=eq.trainerName+' 트레이너 PT 상담 신청';
-  /* VIDEO_REPLACE: 실제 영상 연동 시 활성화
-     const vc = document.getElementById('video-container');
-     vc.innerHTML = `<video src="${eq.videoUrl}" controls autoplay playsinline class="w-full h-full object-contain"></video>`;
-  */
   openModal('video-modal');
 }
-
-function scrollToTrainer() {
+function scrollToTrainers() {
   closeModal('video-modal');
   setTimeout(()=>{
     const el=document.getElementById('trainers');
-    if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'});
+    if(el) window.scrollTo({top:el.offsetTop-68,behavior:'smooth'});
   },300);
 }
 
-function openImageModal(src, alt) {
-  const img = document.getElementById('image-modal-img');
-  const title = document.getElementById('image-modal-title');
-  if (!img || !title) return;
-  img.src = src;
-  img.alt = alt || '이미지 크게 보기';
-  title.textContent = alt || '이미지 크게 보기';
-  openModal('image-modal');
+function openTrainerModal(id) {
+  const t=TRAINER_DATA.find(x=>x.id===id); if(!t) return;
+  window.location.hash='form';
+  window.scrollTo({top:document.getElementById('form').offsetTop-68,behavior:'smooth'});
+}
+
+function openLightbox(img) {
+  const lbImg=document.getElementById('lightbox-img');
+  lbImg.src=img.src;
+  lbImg.alt=img.alt;
+  openModal('lightbox');
 }
 
 function openModal(id) { document.getElementById(id).classList.add('act'); document.body.style.overflow='hidden'; }
@@ -1567,88 +1457,78 @@ function handleModalOverlayClick(e,id) { if(e.target===e.currentTarget) closeMod
 function openPrivacyModal() { openModal('privacy-modal'); }
 
 document.addEventListener('keydown', e => {
-  if(e.key!=='Escape') return;
-  ['video-modal','success-modal','privacy-modal','image-modal'].forEach(id => {
+  if(e.key!=='Escape')return;
+  ['video-modal','success-modal','privacy-modal','lightbox'].forEach(id=>{
     if(document.getElementById(id)?.classList.contains('act')) closeModal(id);
   });
 });
 
-/* ============================================================
+/* ════════════════════════════════════════════
    FORM
-   ============================================================ */
-
-function showErr(id, show) { document.getElementById(id).classList.toggle('show', show); }
-function validatePhone(v) { return /^01[016789]-?\d{3,4}-?\d{4}$/.test(v.replace(/-/g,'')); }
+   ════════════════════════════════════════════ */
+function showErr(id,show){document.getElementById(id).classList.toggle('show',show);}
+function validatePhone(v){return /^01[016789]-?\d{3,4}-?\d{4}$/.test(v.replace(/-/g,''));}
 
 function handleSubmit(e) {
   e.preventDefault();
-  const name    = document.getElementById('name').value.trim();
-  const phone   = document.getElementById('phone').value.trim();
-  const purpose = document.getElementById('purpose').value;
-  const time    = document.getElementById('preferred-time').value;
-  const privacy = document.getElementById('privacy-agree').checked;
-  let valid = true;
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const purpose=document.getElementById('purpose').value;
+  const time=document.getElementById('preferred-time').value;
+  const privacy=document.getElementById('privacy-agree').checked;
+  let valid=true;
 
-  if (!name)              { showErr('name-err',true);    valid=false; } else showErr('name-err',false);
-  if (!validatePhone(phone)) { showErr('phone-err',true); valid=false; } else showErr('phone-err',false);
-  if (!purpose)           { showErr('purpose-err',true); valid=false; } else showErr('purpose-err',false);
-  if (!time)              { showErr('time-err',true);    valid=false; } else showErr('time-err',false);
-  if (!privacy)           { showErr('privacy-err',true); valid=false; } else showErr('privacy-err',false);
+  if(!name)              {showErr('name-err',true);    valid=false;} else showErr('name-err',false);
+  if(!validatePhone(phone)){showErr('phone-err',true); valid=false;} else showErr('phone-err',false);
+  if(!purpose)           {showErr('purpose-err',true); valid=false;} else showErr('purpose-err',false);
+  if(!time)              {showErr('time-err',true);    valid=false;} else showErr('time-err',false);
+  if(!privacy)           {showErr('privacy-err',true); valid=false;} else showErr('privacy-err',false);
 
-  if (!valid) { document.querySelector('.ferr.show')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if(!valid){document.querySelector('.ferr.show')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
 
-  const formData = {
-    name, phone, purpose, preferredTime: time,
-    preferredTrainer: document.getElementById('preferred-trainer')?.value || '',
-    goal:             document.getElementById('goal')?.value || '',
-    experience:       document.getElementById('experience')?.value || '',
-    marketingAgree:   document.getElementById('marketing-agree').checked,
-    submittedAt:      new Date().toISOString(),
+  const formData={
+    name,phone,purpose,preferredTime:time,
+    preferredTrainer:document.getElementById('preferred-trainer')?.value||'',
+    goal:document.getElementById('goal')?.value||'',
+    experience:document.getElementById('experience')?.value||'',
+    marketingAgree:document.getElementById('marketing-agree').checked,
+    submittedAt:new Date().toISOString(),
   };
+  console.log('[짐플릭스 신청 데이터]',formData);
 
-  console.log('[짐플릭스 신청 데이터]', formData);
-
-  /* ═══════════════════════════════════════════════════════════
-     TODO: 신청 데이터 처리
-     ① 서버 전송: fetch('/api/applications', { method:'POST', body:JSON.stringify(formData) })
-     ② Google Sheets: fetch('APPS_SCRIPT_URL', { method:'POST', body:JSON.stringify(formData) })
-     ③ SMS: sendSMS(formData.phone, '[짐플릭스] 신청이 접수되었습니다.')
-     ④ 카카오 알림톡: sendKakao({ to:formData.phone, templateId:CONFIG.kakaoTemplateId, ... })
-  ═══════════════════════════════════════════════════════════ */
+  /* TODO: 실제 데이터 전송
+     fetch('/api/applications',{method:'POST',body:JSON.stringify(formData)})
+     SMS: 문자 발송 API 연동
+     카카오 알림톡 API 연동
+  */
 
   document.getElementById('gymForm').reset();
   document.getElementById('pt-extra').classList.add('hidden');
   openModal('success-modal');
 }
 
-/* ============================================================
+/* ════════════════════════════════════════════
    SCROLL ANIMATIONS
-   ============================================================ */
-
+   ════════════════════════════════════════════ */
 function initScrollAnimations() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+  },{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 }
-
 function initFixedCTA() {
-  const cta = document.getElementById('fixed-cta');
-  const form = document.getElementById('form');
-  if (!cta || !form) return;
-  new IntersectionObserver(entries => {
-    entries.forEach(e => cta.classList.toggle('hide', e.isIntersecting));
-  }, { threshold: 0.15 }).observe(form);
+  const cta=document.getElementById('fixed-cta');
+  const form=document.getElementById('form');
+  if(!cta||!form)return;
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>cta.classList.toggle('hide',e.isIntersecting));
+  },{threshold:0.1}).observe(form);
 }
 
-/* ============================================================
+/* ════════════════════════════════════════════
    INIT
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  renderPainPoints();
-  renderBenefits();
+   ════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
   renderEquipment();
   renderTrainers();
   renderFAQ();
