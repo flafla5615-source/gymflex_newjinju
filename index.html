@@ -868,12 +868,27 @@
     </div>
 
     <!-- IMAGE 08: 구독 설명 인포그래픽 (contain, 기존 bento grid 대체) -->
-    <div class="fade-up d2">
+    <div class="fade-up d2" style="position:relative;">
       <img src="images/gymflix-08-subscription-info.png"
            alt="헬스 구독은 필요한 기간만 월 단위로 이용하는 방식입니다 — 월 38,900원 · 한 달부터 시작 · 목돈 부담 없이 · 시설을 직접 경험한 뒤 결정"
            loading="lazy"
            class="img-info"
            onclick="openLightbox(this)">
+      <!-- 이미지 내 구 주소 문구를 오버레이로 교체 -->
+      <div style="position:absolute;bottom:0;left:0;right:0;
+                  background:#0c0c0c;
+                  padding:clamp(10px,2.5vw,26px) 3%;
+                  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;
+                  border-top:1px solid rgba(255,255,255,0.07);">
+        <span style="display:flex;align-items:center;gap:6px;font-size:clamp(10px,1.15vw,13px);color:#A6A6A6;">
+          <iconify-icon icon="solar:shield-check-bold-duotone" width="13" style="color:#E21D2F;flex-shrink:0;"></iconify-icon>
+          가입 절차가 간단하고, 해지도 자유롭습니다.
+        </span>
+        <span style="display:flex;align-items:center;gap:6px;font-size:clamp(10px,1.15vw,13px);color:#A6A6A6;">
+          <iconify-icon icon="solar:map-point-bold" width="13" style="color:#E21D2F;flex-shrink:0;"></iconify-icon>
+          경남 진주시 개양로 112 2층
+        </span>
+      </div>
     </div>
 
     <div class="text-center mt-10 fade-up d3">
