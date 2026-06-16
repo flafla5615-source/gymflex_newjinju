@@ -1190,9 +1190,9 @@
               <label for="preferred-trainer" class="block text-sm font-semibold mb-2">희망 트레이너</label>
               <select id="preferred-trainer" name="preferredTrainer" class="finput">
                 <option value="">상관없음 / 추천 받고 싶어요</option>
-                <option value="1">김명준 트레이너</option>
-                <option value="2">이서연 트레이너</option>
-                <option value="3">최도윤 트레이너</option>
+                <option value="1">강상우 트레이너</option>
+                <option value="2">변준영 트레이너</option>
+                <option value="3">황재윤 트레이너</option>
               </select>
             </div>
             <div class="mb-4">
@@ -1516,46 +1516,46 @@
 
 const TRAINER_DATA = [
   {
-    id:1, name:'김명준', position:'퍼스널 트레이너',
-    image:null,
-    slogan:'확실하게 잡아주는 PT가 되겠습니다.',
-    specialties:['근력 증가','체형 개선','초보자 PT'],
-    career:['대형 스포츠센터 5년 경력','프리랜서 트레이너 3년'],
-    certifications:['생활스포츠지도사 2급','NSCA-CPT'],
-    teachingStyle:'정확한 자세와 단계적인 강도 조절',
-    introduction:'운동을 처음 시작하는 회원도 기초 자세부터 루틴까지 단계적으로 지도합니다.',
+    id:1, name:'강상우', position:'퍼스널 트레이너',
+    image:'images/trainer-01-kangswoo.png',
+    slogan:'부상 없이 오래오래 건강하게 운동합시다.',
+    specialties:['보디빌딩','바디프로필','근력증가'],
+    career:['WNGP 창원 보디빌딩 1위','WNGP 창원 클래식보디빌딩 1위'],
+    certifications:['NSCA 스포츠영양코치 LV.1 · FSA Basic 수료'],
+    teachingStyle:'50분 안에 최대 운동효율, 빡세고 재밌는 수업',
+    introduction:'부상 없이 오래오래 건강하게 운동합시다.',
     reservationLink:'#form',
   },
   {
-    id:2, name:'이서연', position:'퍼스널 트레이너',
-    image:null,
-    slogan:'목표를 함께 정하고, 함께 달성합니다.',
-    specialties:['다이어트','체지방 감소','여성 PT'],
-    career:['헬스장 전속 트레이너 4년','다이어트 전문 강사 수료'],
-    certifications:['스포츠지도사 2급','ACSM-CPT'],
-    teachingStyle:'꾸준한 습관 형성과 유산소 병행',
-    introduction:'다이어트와 체지방 감소를 목표로 하는 회원에게 체계적인 식이 조언과 운동을 지도합니다.',
+    id:2, name:'변준영', position:'퍼스널 트레이너',
+    image:'images/trainer-02-byeonjunyoung.png',
+    slogan:'이론과 실기를 모두 겸비한 트레이너',
+    specialties:['다이어트','근력증가','바디프로필'],
+    career:['NPCA 경남 클래식피지크 주니어 3위','K클래식 대구 보디빌딩 2위'],
+    certifications:['생활체육지도사 2급 · 체육교육과 전공'],
+    teachingStyle:'열정적인 수업, 대회 준비 전문',
+    introduction:'이론과 실기를 모두 겸비한 트레이너',
     reservationLink:'#form',
   },
   {
-    id:3, name:'최도윤', position:'퍼스널 트레이너',
-    image:null,
-    slogan:'바디프로필부터 일상 근력까지, 함께 만듭니다.',
-    specialties:['바디프로필','근비대','중급자 PT'],
-    career:['보디빌딩 대회 입상 경력','전문 트레이너 6년'],
-    certifications:['생활스포츠지도사 1급','ISSA-CPT'],
-    teachingStyle:'고강도 훈련과 주기화 프로그램 구성',
-    introduction:'근비대와 바디프로필을 목표로 하는 회원에게 체계적인 분할 훈련과 식단 설계를 제공합니다.',
+    id:3, name:'황재윤', position:'퍼스널 트레이너',
+    image:'images/trainer-03-hwangjaeyoon.png',
+    slogan:'강해지고 건강해지고 운동에 재미를 붙여드리겠습니다!',
+    specialties:['시합준비','근력증가','체형교정'],
+    career:['前 유소년·청소년 역도 코치','現 머슬팩토리 신진주역점 트레이너'],
+    certifications:['생활체육역도지도자 2급 · NSCA · FSA Basic'],
+    teachingStyle:'역도 코치 출신 · 초보자 맞춤 지도',
+    introduction:'강해지고 건강해지고 운동에 재미를 붙여드리겠습니다!',
     reservationLink:'#form',
   },
 ];
 
 const EQUIPMENT_DATA = [
-  {id:1,machineName:'시티드 로우',     targetArea:'등 · 광배근',       description:'팔보다 등을 사용해 당기는 머신',             thumbnail:null,videoUrl:'',trainerName:'최도윤',trainerId:3},
-  {id:2,machineName:'레그 프레스',      targetArea:'허벅지 · 대퇴사두',  description:'무릎 각도를 맞추고 발판을 미는 머신',          thumbnail:null,videoUrl:'',trainerName:'김명준',trainerId:1},
-  {id:3,machineName:'인클라인 덤벨 프레스',targetArea:'가슴 · 상흉근',  description:'각도를 높여 상부 가슴을 자극하는 동작',          thumbnail:null,videoUrl:'',trainerName:'이서연',trainerId:2},
-  {id:4,machineName:'케이블 푸시다운',   targetArea:'삼두 · 팔',        description:'케이블을 내려눌러 팔 뒤쪽을 강화하는 동작',      thumbnail:null,videoUrl:'',trainerName:'최도윤',trainerId:3},
-  {id:5,machineName:'랫 풀다운',        targetArea:'등 · 광배근',       description:'바를 당겨 내리며 날개 근육을 키우는 머신',        thumbnail:null,videoUrl:'',trainerName:'김명준',trainerId:1},
+  {id:1,machineName:'시티드 로우',     targetArea:'등 · 광배근',       description:'팔보다 등을 사용해 당기는 머신',             thumbnail:null,videoUrl:'',trainerName:'황재윤',trainerId:3},
+  {id:2,machineName:'레그 프레스',      targetArea:'허벅지 · 대퇴사두',  description:'무릎 각도를 맞추고 발판을 미는 머신',          thumbnail:null,videoUrl:'',trainerName:'강상우',trainerId:1},
+  {id:3,machineName:'인클라인 덤벨 프레스',targetArea:'가슴 · 상흉근',  description:'각도를 높여 상부 가슴을 자극하는 동작',          thumbnail:null,videoUrl:'',trainerName:'변준영',trainerId:2},
+  {id:4,machineName:'케이블 푸시다운',   targetArea:'삼두 · 팔',        description:'케이블을 내려눌러 팔 뒤쪽을 강화하는 동작',      thumbnail:null,videoUrl:'',trainerName:'황재윤',trainerId:3},
+  {id:5,machineName:'랫 풀다운',        targetArea:'등 · 광배근',       description:'바를 당겨 내리며 날개 근육을 키우는 머신',        thumbnail:null,videoUrl:'',trainerName:'강상우',trainerId:1},
 ];
 
 const FAQ_DATA = [
