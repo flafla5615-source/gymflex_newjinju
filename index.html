@@ -541,12 +541,12 @@
 
         <!-- 월 구독 칩 -->
         <div class="rounded-2xl px-4 py-3.5"
-             style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);min-width:138px;">
-          <p class="text-xs mb-1" style="color:#A6A6A6;">월 구독</p>
+             style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);min-width:152px;">
+          <p class="text-xs mb-1 font-semibold" style="color:#A6A6A6;">월 구독 · 가볍게 시작</p>
           <p class="font-outfit font-black leading-none" style="font-size:22px;color:#F5F5F5;">
             38,900<span class="text-sm font-semibold ml-0.5" style="color:#A6A6A6;">원</span>
           </p>
-          <p class="text-xs mt-1.5" style="color:#555;">한 달부터 시작하는 짐플릭스 구독</p>
+          <p class="text-xs mt-1.5 font-semibold" style="color:#E21D2F;">선착순 100명 마감 후 48,900원</p>
         </div>
 
         <!-- 12개월 한정 특가 칩 -->
@@ -557,7 +557,7 @@
             <iconify-icon icon="solar:fire-bold" width="11"></iconify-icon>
             선착순 30명
           </span>
-          <p class="text-xs mb-1" style="color:#E21D2F;">12개월 한정 특가</p>
+          <p class="text-xs mb-1" style="color:#E21D2F;">12개월 한정 · 오래 다닐수록 저렴하게</p>
           <p class="font-outfit font-black leading-none" style="font-size:22px;color:#F5F5F5;">
             369,000<span class="text-sm font-semibold ml-0.5" style="color:#A6A6A6;">원</span>
           </p>
@@ -678,11 +678,25 @@
     </div>
 
     <!-- 핵심 카피 -->
-    <div class="text-center mb-10 fade-up d1">
+    <div class="text-center mb-6 fade-up d1">
       <p class="font-outfit" style="font-size:clamp(15px,2.8vw,20px);color:#666;">
         한 달은&nbsp;<span class="font-black" style="color:#F5F5F5;font-size:1.25em;">월 38,900원</span>,&nbsp;
         1년은&nbsp;<span class="font-black" style="color:#E21D2F;font-size:1.25em;">월 약 30,750원</span>
       </p>
+    </div>
+
+    <!-- 선착순 긴급 배지 -->
+    <div class="flex flex-wrap justify-center gap-3 mb-8 fade-up d2">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+            style="background:rgba(255,255,255,0.06);color:#C0C0C0;border:1px solid rgba(255,255,255,0.1);">
+        <iconify-icon icon="solar:users-group-rounded-bold" width="13"></iconify-icon>
+        월 구독 — 선착순 100명 이후 48,900원
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+            style="background:#E21D2F;color:#fff;">
+        <iconify-icon icon="solar:fire-bold" width="13"></iconify-icon>
+        12개월 특가 — 선착순 30명 한정
+      </span>
     </div>
 
     <!-- 2열 가격 카드 -->
@@ -692,13 +706,22 @@
       <div class="gcard p-7 flex flex-col fade-up d1">
         <span class="self-start inline-block text-xs font-bold tracking-wider px-3 py-1.5 rounded-full mb-5"
               style="background:rgba(255,255,255,0.06);color:#A6A6A6;border:1px solid rgba(255,255,255,0.1);">
-          한 달부터 시작
+          가볍게 시작
         </span>
-        <p class="font-outfit font-black leading-none mb-1" style="font-size:clamp(40px,8vw,56px);">
+        <p class="font-outfit font-black leading-none mb-1" style="font-size:clamp(44px,9vw,60px);">
           38,900<span class="text-2xl font-bold ml-1" style="color:#A6A6A6;">원</span>
         </p>
-        <p class="mb-5" style="font-size:14px;color:#A6A6A6;">/월</p>
-        <p class="font-bold mb-3" style="font-size:15px;">월 3만원대로 부담 없이 시작</p>
+        <p class="mb-4" style="font-size:14px;color:#A6A6A6;">/월</p>
+        <!-- 선착순 가격 변경 안내 -->
+        <div class="flex items-center gap-2 px-3 py-2.5 rounded-xl mb-5"
+             style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+          <iconify-icon icon="solar:clock-circle-bold-duotone" width="15" style="color:#888;flex-shrink:0;"></iconify-icon>
+          <p style="font-size:12px;color:#888;line-height:1.4;">
+            선착순 100명 마감 후
+            <span class="font-bold" style="color:#F5F5F5;"> 48,900원</span>으로 변경
+          </p>
+        </div>
+        <p class="font-bold mb-3" style="font-size:15px;">처음 시작하는 분께 추천</p>
         <p class="leading-relaxed mb-7 flex-1" style="font-size:14px;color:#A6A6A6;">
           처음부터 긴 기간을 결정할 필요 없이 한 달 단위로 가볍게 시작할 수 있습니다.<br><br>
           운동을 얼마나 오래 할지 아직 모르거나 시설을 먼저 경험해보고 싶은 분께 추천합니다.
@@ -722,7 +745,8 @@
           </span>
         </div>
         <div class="mt-3">
-          <p class="font-outfit font-black leading-none mb-1" style="font-size:clamp(36px,7vw,52px);">
+          <p class="mb-2 font-semibold" style="font-size:13px;color:#E21D2F;letter-spacing:.01em;">오래 다닐수록 저렴하게</p>
+          <p class="font-outfit font-black leading-none mb-1" style="font-size:clamp(38px,7.5vw,54px);">
             369,000<span class="text-2xl font-bold ml-1" style="color:#A6A6A6;">원</span>
           </p>
           <p class="mb-4" style="font-size:14px;color:#A6A6A6;">/12개월</p>
@@ -750,9 +774,8 @@
 
     <!-- 하단 공통 안내 -->
     <p class="text-center mt-8 fade-up d3" style="font-size:13px;color:#555;line-height:1.9;">
-      월 구독은 부담 없이 시작하는 이용권이며,<br>
-      12개월 한정 특가권은 꾸준히 운동할 회원을 위한 선착순 이벤트 상품입니다.<br>
-      한정 수량 소진 후 가격과 혜택은 변경될 수 있습니다.
+      월 구독권은 선착순 100명 마감 후 월 48,900원으로 가격이 변경됩니다.<br>
+      12개월 한정 특가권은 선착순 30명 마감 후 가격과 혜택이 변경될 수 있습니다.
     </p>
   </div>
 </section>
