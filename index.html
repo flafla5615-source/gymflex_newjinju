@@ -474,7 +474,7 @@
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav class="nav-glass fixed top-0 w-full z-50" style="height:var(--nav-h)">
   <div class="container h-full flex items-center justify-between">
-    <a href="#" class="font-outfit font-black text-xl tracking-[0.2em] text-gwhite">GYMFLIX</a>
+    <a href="#" class="font-outfit font-black tracking-[0.18em] text-gwhite" style="font-size:clamp(13px,1.5vw,16px);">MUSCLE FACTORY 24</a>
     <ul class="hidden md:flex items-center gap-7">
       <li><a href="#subscription" class="nav-link">구독 안내</a></li>
       <li><a href="#facility"     class="nav-link">시설 안내</a></li>
@@ -538,8 +538,8 @@
       <!-- 브랜드 레이블 -->
       <div class="flex flex-wrap items-center gap-2 mb-5 fade-up">
         <span class="font-outfit font-black text-xs tracking-[0.26em]" style="color:#E21D2F;">MUSCLE FACTORY 24</span>
-        <span style="color:#2a2a2a;">·</span>
-        <span class="font-outfit font-semibold text-xs tracking-[0.14em]" style="color:#555;">GYMFLIX SUBSCRIPTION</span>
+        <span style="color:#444;font-size:10px;font-weight:700;letter-spacing:.1em;">×</span>
+        <span class="font-outfit font-semibold text-xs tracking-[0.14em]" style="color:#555;">GYMFLIX</span>
       </div>
 
       <!-- PC 헤드라인 -->
@@ -816,7 +816,7 @@
           </div>
         </div>
         <p class="leading-relaxed mb-7 flex-1" style="font-size:14px;color:#A6A6A6;">
-          꾸준히 운동할 계획이라면 12개월 동안 월 약 30,750원으로 이용할 수 있는 짐플릭스 신진주역점 한정 이벤트입니다.<br><br>
+          꾸준히 운동할 계획이라면 12개월 동안 월 약 30,750원으로 이용할 수 있는 머슬팩토리24 신진주역점 한정 이벤트입니다.<br><br>
           선착순 30명 마감 후에는 가격과 혜택이 변경될 수 있습니다.
         </p>
         <button onclick="goToFormWithPurpose('annual-special')"
@@ -993,7 +993,7 @@
   <!-- IMAGE 06: 시설 전경 히어로 배너 (cover) -->
   <div class="fac-hero">
     <img src="images/gymflix-06-facility.png"
-         alt="짐플릭스 신진주역점 300평 규모 헬스장 시설 전경 — 프리웨이트존, 유산소 기구, 머신존"
+         alt="머슬팩토리24 신진주역점 300평 규모 헬스장 시설 전경 — 프리웨이트존, 유산소 기구, 머신존"
          loading="lazy"
          class="img-photo">
     <div class="fac-hero-overlay" aria-hidden="true"></div>
@@ -1389,7 +1389,7 @@
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
       <div>
-        <p class="font-outfit font-black text-xl tracking-[0.2em] mb-1">GYMFLIX</p>
+        <p class="font-outfit font-black tracking-[0.16em] mb-1" style="font-size:clamp(13px,1.4vw,16px);">MUSCLE FACTORY 24</p>
         <p class="text-sm font-bold mb-0.5" style="color:#A6A6A6;">머슬팩토리24 신진주역점</p>
         <p class="mb-3" style="font-size:11px;color:#555;">짐플릭스 구독 서비스 운영점</p>
         <a href="https://map.naver.com/p/search/%EB%A8%B8%EC%8A%AC%ED%8C%A9%ED%86%A0%EB%A6%AC24/place/1087283268?c=15.00,0,0,0,dh&placePath=/home?bk_query=%EB%A8%B8%EC%8A%AC%ED%8C%A9%ED%86%A0%EB%A6%AC24&entry=bmp&from=map&fromPanelNum=2&timestamp=202606161142&locale=ko&svcName=map_pcv5&searchText=%EB%A8%B8%EC%8A%AC%ED%8C%A9%ED%86%A0%EB%A6%AC24"
@@ -1465,12 +1465,12 @@
     </div>
     <h2 class="text-xl font-black mb-3">신청이 완료되었습니다</h2>
     <p class="text-sm leading-relaxed mb-8" style="color:#A6A6A6;">
-      입력해주신 연락처로<br>짐플릭스 신진주역점 이용 안내와<br>방문 방법을 보내드립니다.<br><br>문자 또는 카카오톡을 확인해주세요.
+      입력해주신 연락처로<br>머슬팩토리24 신진주역점 이용 안내와<br>방문 방법을 보내드립니다.<br><br>문자 또는 카카오톡을 확인해주세요.
     </p>
     <div class="gcard p-4 mb-8">
-      <p class="font-outfit font-black tracking-widest text-sm mb-0.5">GYMFLIX</p>
-      <p class="text-xs font-semibold mb-0.5" style="color:#A6A6A6;">머슬팩토리24 신진주역점</p>
-      <p class="text-xs" style="color:#555;">짐플릭스 구독 서비스 운영점</p>
+      <p class="font-outfit font-black tracking-widest text-xs mb-0.5">MUSCLE FACTORY 24</p>
+      <p class="text-xs font-semibold mb-0.5" style="color:#F5F5F5;">머슬팩토리24 신진주역점</p>
+      <p class="text-xs" style="color:#555;">짐플릭스 구독 시스템 운영점</p>
     </div>
     <div class="grid grid-cols-2 gap-3">
       <button onclick="closeModal('success-modal')" class="btn-outline py-3 text-sm">홈으로</button>
@@ -1560,7 +1560,7 @@ const EQUIPMENT_DATA = [
 
 const FAQ_DATA = [
   {question:'구독은 꼭 장기간 이용해야 하나요?',   answer:'아니요. 한 달 단위 구독부터 시작할 수 있으며, 꾸준히 운동할 계획이라면 12개월 한정 특가 이용권도 선택할 수 있습니다.'},
-  {question:'월 이용료는 얼마인가요?',             answer:'짐플릭스 신진주역점의 월 구독료는 38,900원입니다. 선택 서비스와 추가 사항은 상담 시 안내드립니다.'},
+  {question:'월 이용료는 얼마인가요?',             answer:'머슬팩토리24 신진주역점의 월 구독료는 38,900원입니다. 선택 서비스와 추가 사항은 상담 시 안내드립니다.'},
   {question:'PT를 꼭 등록해야 하나요?',            answer:'아니요. 헬스 구독만 이용할 수 있으며, 필요한 경우 원하는 트레이너에게 별도로 PT 상담을 신청할 수 있습니다.'},
   {question:'운동을 처음 시작해도 괜찮나요?',       answer:'네. 주요 운동기구 사용법을 짧은 영상으로 확인할 수 있으며, 필요한 경우 트레이너 상담도 가능합니다.'},
   {question:'주차가 가능한가요?',                  answer:'차량 방문 시 주차장을 이용할 수 있으며, 최대 3시간 주차를 지원합니다.'},
@@ -1617,7 +1617,7 @@ function renderTrainers() {
     <div class="t-card" role="listitem" onclick="openTrainerModal(${t.id})">
       <!-- Image 13 스타일 헤더 바 -->
       <div class="t-card-header">
-        <span class="font-outfit font-black text-xs tracking-widest text-white">GYMFLIX</span>
+        <span class="font-outfit font-black text-xs tracking-widest text-white">MUSCLE FACTORY 24</span>
         <span style="font-size:9px;color:rgba(255,255,255,0.65);letter-spacing:.1em;">PERSONAL TRAINING</span>
       </div>
       <!-- 프로필 사진 -->
